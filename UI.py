@@ -28,6 +28,7 @@ class Window(QMainWindow):
         # For details
         painter.drawRoundedRect(571, 181, 640, 550, 7.0, 7.0)
         
+        
 if __name__ == '__main__':
     # create pyQt5 app
     app = QApplication(sys.argv)
