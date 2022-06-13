@@ -2,15 +2,21 @@ import sys
 import math
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 from Element import *
 
 
-State = 0
+State = 2
 # State 0 : ระบบหยุดการทำงาน
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
+
+# Parameter 
+WeightValue  = "15"         # น้ำหนักของทุเรียน
+AmountValue  = "2"          # จำนวนพู
+PercentValue = "50"         # เปอร์เซ็นต์น้ำหนักแห้ง
+GradeValue   = "A"          # เกรดของทุเรียน
 
 
 class Window(QMainWindow):
@@ -21,7 +27,7 @@ class Window(QMainWindow):
         self.setStyleSheet("background-color: #DBDBDB;")
         self.setFixedSize(1280, 800)
         self.setWindowTitle("ระบบคัดแยกคุณภาพผลทุเรียนอัตโนมัติ")
-        self.setWindowIcon(QtGui.QIcon("pics/durian.png"))
+        self.setWindowIcon(QtGui.QIcon("icons/durian.png"))
         self.color = Color()
 
         #---------------------------------------------------------------------------------------------------#
@@ -88,11 +94,6 @@ class Window(QMainWindow):
 
         #---------------------------------------------------------------------------------------------------#
 
-        WeightValue  = "15"
-        AmountValue  = "2"
-        PercentValue = "50"
-        GradeValue   = "A"
-
         if (State == 0):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
@@ -119,6 +120,7 @@ class Window(QMainWindow):
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkRed)) 
         
+
         if (State == 1):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
@@ -145,6 +147,7 @@ class Window(QMainWindow):
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkYellow)) 
 
+
         if (State == 2):
             self.WeightVa = Text(self, 0, WeightValue, 604, 365)
             self.WeightVa.setFontSize(40) 
@@ -156,13 +159,13 @@ class Window(QMainWindow):
             self.AmountVa.setSize(150, 100)
             self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
-            self.PercentVa = Text(self, 0, PercentValue, 988, 365)
+            self.PercentVa = Text(self, 0, PercentValue, 990, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
             self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
-            self.GradeVa = Text(self, 0, GradeValue, 988, 585)
-            self.GradeVa.setFontSize(40) 
+            self.GradeVa = Text(self, 0, GradeValue, 990, 587)
+            self.GradeVa.setFontSize(38) 
             self.GradeVa.setSize(150, 100)
             self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
 
@@ -170,6 +173,31 @@ class Window(QMainWindow):
             self.StateVa.setFontSize(13) 
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+
+            self.Pic1 = Text(self, 0, "ภาพมุมที่ 1", 42, 640)
+            self.Pic1.setFontSize(10) 
+            self.Pic1.setSize(300, 100)
+            self.Pic1.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+
+            self.Pic2 = Text(self, 0, "ภาพมุมที่ 2", 272, 640)
+            self.Pic2.setFontSize(10) 
+            self.Pic2.setSize(300, 100)
+            self.Pic2.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+
+            high_rez = QtCore.QSize(216, 384)
+            self.label = QLabel(self)
+            self.pixmap1 = QPixmap('pics/Durian1.jpg')
+            self.pixmap1 = self.pixmap1.scaled(high_rez)
+            self.label.setPixmap(self.pixmap1)
+            self.label.resize(self.pixmap1.width(), self.pixmap1.height())
+            self.label.move(86, 270)
+
+            self.label = QLabel(self)
+            self.pixmap2 = QPixmap('pics/Durian2.jpg')
+            self.pixmap2 = self.pixmap2.scaled(high_rez)
+            self.label.setPixmap(self.pixmap2)
+            self.label.resize(self.pixmap2.width(), self.pixmap2.height())
+            self.label.move(317, 270)
 
         #---------------------------------------------------------------------------------------------------#
 
@@ -224,21 +252,21 @@ class Window(QMainWindow):
             painter4.setPen(QPen(QColor(211, 47, 47)))
             painter4.setBrush(QBrush(QColor(211, 47, 47), Qt.SolidPattern))
             # For title
-            painter4.drawEllipse(910, 91, 28, 28)
+            painter4.drawEllipse(900, 91, 28, 28)
 
         if (StateForLight == 1):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(255, 210, 85)))
             painter4.setBrush(QBrush(QColor(255, 210, 85), Qt.SolidPattern))
             # For title
-            painter4.drawEllipse(910, 91, 28, 28)
+            painter4.drawEllipse(900, 91, 28, 28)
 
         if (StateForLight == 2):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(82, 137, 1)))
             painter4.setBrush(QBrush(QColor(82, 137, 1), Qt.SolidPattern))
             # For title
-            painter4.drawEllipse(910, 91, 28, 28)
+            painter4.drawEllipse(900, 91, 28, 28)
 
    #---------------------------------------------------------------------------------------------------------------------------#
            
