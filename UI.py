@@ -1,6 +1,6 @@
-from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QPainter, QBrush, QPen
+from PyQt5 import QtGui, QtCore
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QPainter, QBrush, QPen, QFont, QFontDatabase
 from PyQt5.QtCore import Qt
 import sys
 
@@ -11,9 +11,10 @@ class Window(QMainWindow):
         # self.setGeometry(450, 200, 960, 540)
         self.setStyleSheet("background-color: #DBDBDB;")
         self.setFixedSize(1280, 800)
-        self.setWindowTitle("ระบบคัดแยกคุณภาพทุเรียนอัตโนมัติ")
+        self.setWindowTitle("ระบบคัดแยกคุณภาพผลทุเรียนอัตโนมัติ")
         self.setWindowIcon(QtGui.QIcon("pic/durian.png"))
         self.show()
+        
     
     def paintEvent(self, e):
         painter = QPainter(self)
@@ -27,7 +28,13 @@ class Window(QMainWindow):
         painter.drawRoundedRect(69, 181, 480, 550, 7.0, 7.0)
         # For details
         painter.drawRoundedRect(571, 181, 640, 550, 7.0, 7.0)
-        
+
+    def addText(self):
+        font = QFont()
+        font.setFamily('Tahoma')
+        mainText = QLabel('ระบบคัดแยกผลทุเรียนอัตโนมัติ',window)
+        mainText.setFont(font)
+        mainText.move(129, 83)
         
 if __name__ == '__main__':
     # create pyQt5 app
