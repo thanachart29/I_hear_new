@@ -115,7 +115,7 @@ class Window(QMainWindow):
             self.GradeVa.setSize(150, 100)
             self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
 
-            self.StateVa = Text(self, 0, "ระบบหยุดการทำงาน", 915, 55)
+            self.StateVa = Text(self, 0, "ระบบหยุดการทำงาน", 885, 55)
             self.StateVa.setFontSize(13) 
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkRed)) 
@@ -142,7 +142,7 @@ class Window(QMainWindow):
             self.GradeVa.setSize(150, 100)
             self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
 
-            self.StateVa = Text(self, 0, "ระบบกำลังประมวลผล", 915, 55)
+            self.StateVa = Text(self, 0, "ระบบกำลังประมวลผล", 885, 55)
             self.StateVa.setFontSize(13) 
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkYellow)) 
@@ -169,7 +169,7 @@ class Window(QMainWindow):
             self.GradeVa.setSize(150, 100)
             self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
 
-            self.StateVa = Text(self, 0, "ระบบทำงานเสร็จสมบูรณ์", 915, 55)
+            self.StateVa = Text(self, 0, "ระบบทำงานเสร็จสมบูรณ์", 885, 55)
             self.StateVa.setFontSize(13) 
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
@@ -211,9 +211,7 @@ class Window(QMainWindow):
         painter.setPen(QPen(Qt.white))
         painter.setBrush(QBrush(Qt.white, Qt.SolidPattern))
         # For title
-        painter.drawRoundedRect(67, 56, 776, 92, 20.0, 20.0)
-        # For status
-        painter.drawRoundedRect(860, 56, 351, 92, 20.0, 20.0)
+        painter.drawRoundedRect(67, 56, 1142, 92, 20.0, 20.0)
         # For picture
         painter.drawRoundedRect(69, 181, 480, 550, 7.0, 7.0)
         # For details
@@ -249,24 +247,42 @@ class Window(QMainWindow):
 
         if (StateForLight == 0):
             painter4 = QPainter(self)
-            painter4.setPen(QPen(QColor(211, 47, 47)))
-            painter4.setBrush(QBrush(QColor(211, 47, 47), Qt.SolidPattern))
+            painter4.setPen(QPen(QColor(211, 47, 47, 25)))
+            painter4.setBrush(QBrush(QColor(211, 47, 47, 25), Qt.SolidPattern))
+            # For status
+            painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
+
+            painter5 = QPainter(self)
+            painter5.setPen(QPen(QColor(211, 47, 47)))
+            painter5.setBrush(QBrush(QColor(211, 47, 47), Qt.SolidPattern))
             # For title
-            painter4.drawEllipse(900, 91, 28, 28)
+            painter5.drawEllipse(870, 91, 28, 28)
 
         if (StateForLight == 1):
             painter4 = QPainter(self)
-            painter4.setPen(QPen(QColor(255, 210, 85)))
-            painter4.setBrush(QBrush(QColor(255, 210, 85), Qt.SolidPattern))
+            painter4.setPen(QPen(QColor(255, 210, 85, 25)))
+            painter4.setBrush(QBrush(QColor(255, 210, 85, 25), Qt.SolidPattern))
+            # For status
+            painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
+
+            painter5 = QPainter(self)
+            painter5.setPen(QPen(QColor(255, 210, 85)))
+            painter5.setBrush(QBrush(QColor(255, 210, 85), Qt.SolidPattern))
             # For title
-            painter4.drawEllipse(900, 91, 28, 28)
+            painter5.drawEllipse(870, 91, 28, 28)
 
         if (StateForLight == 2):
             painter4 = QPainter(self)
-            painter4.setPen(QPen(QColor(82, 137, 1)))
-            painter4.setBrush(QBrush(QColor(82, 137, 1), Qt.SolidPattern))
+            painter4.setPen(QPen(QColor(163, 195, 48, 25)))
+            painter4.setBrush(QBrush(QColor(163, 195, 48, 25), Qt.SolidPattern))
+            # For status
+            painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
+
+            painter5 = QPainter(self)
+            painter5.setPen(QPen(QColor(82, 137, 1)))
+            painter5.setBrush(QBrush(QColor(82, 137, 1), Qt.SolidPattern))
             # For title
-            painter4.drawEllipse(900, 91, 28, 28)
+            painter5.drawEllipse(870, 91, 28, 28)
 
    #---------------------------------------------------------------------------------------------------------------------------#
            
