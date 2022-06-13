@@ -1,6 +1,5 @@
+from cmath import e
 import sys
-from tokenize import Whitespace
-from webbrowser import BackgroundBrowser
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -16,13 +15,14 @@ class Window(QMainWindow):
         self.setFixedSize(1280, 800)
         self.setWindowTitle("ระบบคัดแยกคุณภาพผลทุเรียนอัตโนมัติ")
         self.setWindowIcon(QtGui.QIcon("pics/durian.png"))
+        self.color = Color()
 
         #---------------------------------------------------------------------------------------------------#
 
         self.bigTopic = Text(self, 0, "ระบบคัดแยกคุณภาพผลทุเรียน", 125, 78)
         self.bigTopic.setFontSize(21) 
         self.bigTopic.setSize(460, 50)
-        self.bigTopic.setStyle("color: rgb(43, 43, 43); background-color: white; font-weight: bold;")
+        self.bigTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGrey))
 
         self.ByTopic = Text(self, 0, "BY BLUEBLINK @FIBO KMUTT", 600, 100)
         self.ByTopic.setFontSize(7) 
@@ -32,48 +32,52 @@ class Window(QMainWindow):
         self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
         self.PicTopic.setFontSize(18) 
         self.PicTopic.setSize(131, 46)
-        self.PicTopic.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: bold;") 
+        self.PicTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGreen)) 
 
         self.DetailTopic = Text(self, 0, "DETAILS", 670, 210)
         self.DetailTopic.setFontSize(18) 
         self.DetailTopic.setSize(131, 46)
-        self.DetailTopic.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: bold;") 
+        self.DetailTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGreen)) 
 
         self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
         self.WeightTopic.setFontSize(13) 
         self.WeightTopic.setSize(150, 30)
-        self.WeightTopic.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: light;") 
+        self.WeightTopic.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
         
         self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
         self.AmountTopic.setFontSize(13) 
         self.AmountTopic.setSize(150, 30)
-        self.AmountTopic.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: light;") 
+        self.AmountTopic.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
 
         self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 970, 300)
         self.PercentTopic.setFontSize(13) 
         self.PercentTopic.setSize(210, 30)
-        self.PercentTopic.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: light;") 
+        self.PercentTopic.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
 
-        self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 610, 500)
+        self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 510)
         self.WeightTopic1.setFontSize(13) 
         self.WeightTopic1.setSize(150, 30)
-        self.WeightTopic1.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: light;") 
+        self.WeightTopic1.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
 
-        self.AmountTopic1 = Text(self, 0, "พู", 790, 500)
+        self.AmountTopic1 = Text(self, 0, "พู", 792, 510)
         self.AmountTopic1.setFontSize(13) 
         self.AmountTopic1.setSize(150, 30)
-        self.AmountTopic1.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: light;") 
+        self.AmountTopic1.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
         
-        self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
+        self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 510)
         self.PercentTopic1.setFontSize(13) 
         self.PercentTopic1.setSize(150, 30)
-        self.PercentTopic1.setStyle("color: rgb(56, 70, 9); background-color: white; font-weight: light;") 
+        self.PercentTopic1.setStyle("color: {} ; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
 
         #---------------------------------------------------------------------------------------------------#
         
+
+        #---------------------------------------------------------------------------------------------------#
+
         self.show()
+
+        #---------------------------------------------------------------------------------------------------#
         
-    
     def paintEvent(self, e):
         painter = QPainter(self)
         painter.setPen(QPen(Qt.white))
@@ -87,6 +91,23 @@ class Window(QMainWindow):
         # For details
         painter.drawRoundedRect(571, 181, 640, 550, 7.0, 7.0)
 
+
+        painter1 = QPainter(self)
+        painter1.setPen(QPen(Qt.white))
+        painter1.setBrush(QBrush(QColor(82, 137, 1, 170), Qt.SolidPattern))
+        # For PicTitle
+        painter1.drawRoundedRect(125, 225, 15, 15, 2.1, 2.1)
+        # For DetailTitle
+        painter1.drawRoundedRect(640, 225, 15, 15, 2.1, 2.1)
+
+
+        painter2 = QPainter(self)
+        painter2.setPen(QColor(150, 150, 150))
+        painter2.setBrush(QBrush(QColor(150, 150, 150), Qt.SolidPattern))
+        # For Grade
+        painter2.drawRoundedRect(571, 586, 640, 110, 0, 0)
+    
+        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
