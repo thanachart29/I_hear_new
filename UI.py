@@ -6,6 +6,13 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from Element import *
 
+
+State = 0
+# State 0 : ระบบหยุดการทำงาน
+# State 1 : ระบบกำลังประมวลผล
+# State 2 : ระบบทำงานเสร็จสมบูรณ์
+
+
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -59,7 +66,7 @@ class Window(QMainWindow):
         self.AmountTopic1.setSize(150, 30)
         self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
-        self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 970, 300)
+        self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
         self.PercentTopic.setFontSize(13) 
         self.PercentTopic.setSize(210, 30)
         self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
@@ -74,9 +81,9 @@ class Window(QMainWindow):
         self.GradeTopic.setSize(200, 60)
         self.GradeTopic.setStyle("color: white ; background-color: None; font-weight: Bold;") 
 
-        self.GradeTopic1 = Text(self, 0, "GRADE", 850, 612)
-        self.GradeTopic1.setFontSize(25) 
-        self.GradeTopic1.setSize(150, 50)
+        self.GradeTopic1 = Text(self, 0, "GRADE", 838, 612)
+        self.GradeTopic1.setFontSize(28) 
+        self.GradeTopic1.setSize(200, 50)
         self.GradeTopic1.setStyle("color: white ; background-color: None; font-weight: Bold;") 
 
         #---------------------------------------------------------------------------------------------------#
@@ -85,15 +92,84 @@ class Window(QMainWindow):
         AmountValue  = "2"
         PercentValue = "50"
         GradeValue   = "A"
-        State = 0
 
-        if (State == "0"):
-            self.WeightVa = Text(self, 0, WeightValue, 655, 400)
-            self.WeightVa.setFontSize(25) 
-            self.WeightVa.setSize(150, 30)
-            self.WeightVa.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGreen)) 
+        if (State == 0):
+            self.WeightVa = Text(self, 0, "0", 604, 365)
+            self.WeightVa.setFontSize(40) 
+            self.WeightVa.setSize(150, 100)
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
+            self.AmountVa = Text(self, 0, "0", 793, 365)
+            self.AmountVa.setFontSize(40) 
+            self.AmountVa.setSize(150, 100)
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
+            self.PercentVa = Text(self, 0, "0", 988, 365)
+            self.PercentVa.setFontSize(40) 
+            self.PercentVa.setSize(150, 100)
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.GradeVa = Text(self, 0, "-", 988, 585)
+            self.GradeVa.setFontSize(40) 
+            self.GradeVa.setSize(150, 100)
+            self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
+
+            self.StateVa = Text(self, 0, "ระบบหยุดการทำงาน", 915, 55)
+            self.StateVa.setFontSize(13) 
+            self.StateVa.setSize(300, 100)
+            self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkRed)) 
+        
+        if (State == 1):
+            self.WeightVa = Text(self, 0, "0", 604, 365)
+            self.WeightVa.setFontSize(40) 
+            self.WeightVa.setSize(150, 100)
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.AmountVa = Text(self, 0, "0", 793, 365)
+            self.AmountVa.setFontSize(40) 
+            self.AmountVa.setSize(150, 100)
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.PercentVa = Text(self, 0, "0", 988, 365)
+            self.PercentVa.setFontSize(40) 
+            self.PercentVa.setSize(150, 100)
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.GradeVa = Text(self, 0, "-", 988, 585)
+            self.GradeVa.setFontSize(40) 
+            self.GradeVa.setSize(150, 100)
+            self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
+
+            self.StateVa = Text(self, 0, "ระบบกำลังประมวลผล", 915, 55)
+            self.StateVa.setFontSize(13) 
+            self.StateVa.setSize(300, 100)
+            self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkYellow)) 
+
+        if (State == 2):
+            self.WeightVa = Text(self, 0, WeightValue, 604, 365)
+            self.WeightVa.setFontSize(40) 
+            self.WeightVa.setSize(150, 100)
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.AmountVa = Text(self, 0, AmountValue, 793, 365)
+            self.AmountVa.setFontSize(40) 
+            self.AmountVa.setSize(150, 100)
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.PercentVa = Text(self, 0, PercentValue, 988, 365)
+            self.PercentVa.setFontSize(40) 
+            self.PercentVa.setSize(150, 100)
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.GradeVa = Text(self, 0, GradeValue, 988, 585)
+            self.GradeVa.setFontSize(40) 
+            self.GradeVa.setSize(150, 100)
+            self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
+
+            self.StateVa = Text(self, 0, "ระบบทำงานเสร็จสมบูรณ์", 915, 55)
+            self.StateVa.setFontSize(13) 
+            self.StateVa.setSize(300, 100)
+            self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
         #---------------------------------------------------------------------------------------------------#
 
@@ -139,6 +215,30 @@ class Window(QMainWindow):
         painter3.drawLine(795, 290, 795, 550)
         # For line
         painter3.drawLine(945, 290, 945, 550)
+
+
+        StateForLight = State
+
+        if (StateForLight == 0):
+            painter4 = QPainter(self)
+            painter4.setPen(QPen(QColor(211, 47, 47)))
+            painter4.setBrush(QBrush(QColor(211, 47, 47), Qt.SolidPattern))
+            # For title
+            painter4.drawEllipse(910, 91, 28, 28)
+
+        if (StateForLight == 1):
+            painter4 = QPainter(self)
+            painter4.setPen(QPen(QColor(255, 210, 85)))
+            painter4.setBrush(QBrush(QColor(255, 210, 85), Qt.SolidPattern))
+            # For title
+            painter4.drawEllipse(910, 91, 28, 28)
+
+        if (StateForLight == 2):
+            painter4 = QPainter(self)
+            painter4.setPen(QPen(QColor(82, 137, 1)))
+            painter4.setBrush(QBrush(QColor(82, 137, 1), Qt.SolidPattern))
+            # For title
+            painter4.drawEllipse(910, 91, 28, 28)
 
    #---------------------------------------------------------------------------------------------------------------------------#
            

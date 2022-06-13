@@ -43,3 +43,4 @@ class Text():
 
     def normal(self):
         self.object.setStyleSheet("color: rgb(255, 255, 255)")
+        
