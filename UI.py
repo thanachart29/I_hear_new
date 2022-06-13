@@ -1,5 +1,5 @@
-from cmath import e
 import sys
+import math
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -27,56 +27,80 @@ class Window(QMainWindow):
         self.ByTopic = Text(self, 0, "BY BLUEBLINK @FIBO KMUTT", 600, 100)
         self.ByTopic.setFontSize(7) 
         self.ByTopic.setSize(185, 18)
-        self.ByTopic.setStyle("color: grey; background-color: white; font-weight: bold;") 
+        self.ByTopic.setStyle("color: grey; background-color: None; font-weight: bold;") 
 
         self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
         self.PicTopic.setFontSize(18) 
         self.PicTopic.setSize(131, 46)
-        self.PicTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGreen)) 
+        self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
 
         self.DetailTopic = Text(self, 0, "DETAILS", 670, 210)
         self.DetailTopic.setFontSize(18) 
         self.DetailTopic.setSize(131, 46)
-        self.DetailTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGreen)) 
+        self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
 
         self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
         self.WeightTopic.setFontSize(13) 
         self.WeightTopic.setSize(150, 30)
-        self.WeightTopic.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
+        self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+        self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
+        self.WeightTopic1.setFontSize(13) 
+        self.WeightTopic1.setSize(150, 30)
+        self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
         
         self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
         self.AmountTopic.setFontSize(13) 
         self.AmountTopic.setSize(150, 30)
-        self.AmountTopic.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
+        self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+        self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
+        self.AmountTopic1.setFontSize(13) 
+        self.AmountTopic1.setSize(150, 30)
+        self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
         self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 970, 300)
         self.PercentTopic.setFontSize(13) 
         self.PercentTopic.setSize(210, 30)
-        self.PercentTopic.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
-
-        self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 510)
-        self.WeightTopic1.setFontSize(13) 
-        self.WeightTopic1.setSize(150, 30)
-        self.WeightTopic1.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
-
-        self.AmountTopic1 = Text(self, 0, "พู", 792, 510)
-        self.AmountTopic1.setFontSize(13) 
-        self.AmountTopic1.setSize(150, 30)
-        self.AmountTopic1.setStyle("color: {}; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
+        self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
         
-        self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 510)
+        self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
         self.PercentTopic1.setFontSize(13) 
         self.PercentTopic1.setSize(150, 30)
-        self.PercentTopic1.setStyle("color: {} ; background-color: white; font-weight: light;".format(self.color.darkGreen)) 
+        self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+        self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
+        self.GradeTopic.setFontSize(18) 
+        self.GradeTopic.setSize(200, 60)
+        self.GradeTopic.setStyle("color: white ; background-color: None; font-weight: Bold;") 
+
+        self.GradeTopic1 = Text(self, 0, "GRADE", 850, 612)
+        self.GradeTopic1.setFontSize(25) 
+        self.GradeTopic1.setSize(150, 50)
+        self.GradeTopic1.setStyle("color: white ; background-color: None; font-weight: Bold;") 
 
         #---------------------------------------------------------------------------------------------------#
-        
+
+        WeightValue  = "15"
+        AmountValue  = "2"
+        PercentValue = "50"
+        GradeValue   = "A"
+        State = 0
+
+        if (State == "0"):
+            self.WeightVa = Text(self, 0, WeightValue, 655, 400)
+            self.WeightVa.setFontSize(25) 
+            self.WeightVa.setSize(150, 30)
+            self.WeightVa.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGreen)) 
+
+
 
         #---------------------------------------------------------------------------------------------------#
 
         self.show()
 
-        #---------------------------------------------------------------------------------------------------#
+
+    #---------------------------------------------------------------------------------------------------------------------------#
         
     def paintEvent(self, e):
         painter = QPainter(self)
@@ -105,9 +129,19 @@ class Window(QMainWindow):
         painter2.setPen(QColor(150, 150, 150))
         painter2.setBrush(QBrush(QColor(150, 150, 150), Qt.SolidPattern))
         # For Grade
-        painter2.drawRoundedRect(571, 586, 640, 110, 0, 0)
-    
-        
+        painter2.drawRoundedRect(571, 581, 640, 110, 0, 0)
+
+
+        painter3 = QPainter(self)
+        painter3.setPen(QPen(QColor(140, 160, 50, 100), 2.5))
+        painter3.setBrush(QBrush(QColor(140, 160, 50, 100)))
+        # For line
+        painter3.drawLine(795, 290, 795, 550)
+        # For line
+        painter3.drawLine(945, 290, 945, 550)
+
+   #---------------------------------------------------------------------------------------------------------------------------#
+           
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
