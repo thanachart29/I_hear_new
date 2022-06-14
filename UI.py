@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import *
 from Element import *
 
 
-State = 2
+State = 2 
 # State 0 : ระบบหยุดการทำงาน
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
