@@ -17,7 +17,8 @@ WeightValue  = "15"         # น้ำหนักของทุเรีย�
 AmountValue  = "2"          # จำนวนพู
 PercentValue = "50"         # เปอร์เซ็นต์น้ำหนักแห้ง
 GradeValue   = "A"          # เกรดของทุเรียน
-
+PicAngle1    = 'pics/Durian1.jpg'
+PicAngle2    = 'pics/Durian2.jpg'
 
 class Window(QMainWindow):
     def __init__(self):
@@ -93,7 +94,8 @@ class Window(QMainWindow):
         self.GradeTopic1.setStyle("color: white ; background-color: None; font-weight: Bold;") 
 
         #---------------------------------------------------------------------------------------------------#
-
+        
+        # ระบบหยุดทำงานรอคำสั่งจากเครื่อง
         if (State == 0):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
@@ -121,6 +123,7 @@ class Window(QMainWindow):
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkRed)) 
         
 
+        # ระบบกำลังประมวลผลข้อมูล
         if (State == 1):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
@@ -148,6 +151,7 @@ class Window(QMainWindow):
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkYellow)) 
 
 
+        # ระบบทำงานเสร็จสมบูรณ์ แสดงข้อมูลที่เกี่ยวข้อง
         if (State == 2):
             self.WeightVa = Text(self, 0, WeightValue, 604, 365)
             self.WeightVa.setFontSize(40) 
@@ -186,14 +190,14 @@ class Window(QMainWindow):
 
             high_rez = QtCore.QSize(216, 384)
             self.label = QLabel(self)
-            self.pixmap1 = QPixmap('pics/Durian1.jpg')
+            self.pixmap1 = QPixmap(PicAngle1)
             self.pixmap1 = self.pixmap1.scaled(high_rez)
             self.label.setPixmap(self.pixmap1)
             self.label.resize(self.pixmap1.width(), self.pixmap1.height())
             self.label.move(86, 270)
 
             self.label = QLabel(self)
-            self.pixmap2 = QPixmap('pics/Durian2.jpg')
+            self.pixmap2 = QPixmap(PicAngle2)
             self.pixmap2 = self.pixmap2.scaled(high_rez)
             self.label.setPixmap(self.pixmap2)
             self.label.resize(self.pixmap2.width(), self.pixmap2.height())
@@ -243,9 +247,7 @@ class Window(QMainWindow):
         painter3.drawLine(945, 290, 945, 550)
 
 
-        StateForLight = State
-
-        if (StateForLight == 0):
+        if (State == 0):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(211, 47, 47, 25)))
             painter4.setBrush(QBrush(QColor(211, 47, 47, 25), Qt.SolidPattern))
@@ -258,7 +260,7 @@ class Window(QMainWindow):
             # For title
             painter5.drawEllipse(870, 91, 28, 28)
 
-        if (StateForLight == 1):
+        if (State == 1):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(255, 210, 85, 25)))
             painter4.setBrush(QBrush(QColor(255, 210, 85, 25), Qt.SolidPattern))
@@ -271,7 +273,7 @@ class Window(QMainWindow):
             # For title
             painter5.drawEllipse(870, 91, 28, 28)
 
-        if (StateForLight == 2):
+        if (State == 2):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(163, 195, 48, 25)))
             painter4.setBrush(QBrush(QColor(163, 195, 48, 25), Qt.SolidPattern))
