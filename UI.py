@@ -3,7 +3,7 @@ import math
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDialog, QApplication, QWidget
+from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QComboBox, QHBoxLayout
 from Element import *
 
 State = 0
@@ -529,6 +529,10 @@ class settingWindow(QDialog):
         self.cancel.setFontSize(11) 
         self.cancel.setSize(120, 35)
         self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
+
+        #---------------------------------------------------------------------------------------------------#
+
+        self.selectGrade = 
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
