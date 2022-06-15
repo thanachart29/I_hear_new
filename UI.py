@@ -520,13 +520,33 @@ class settingWindow(QDialog):
         self.backToMain.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
         self.backToMain.Icon(QtGui.QIcon("icons/back.png"))
 
+        self.save = Button(self, 20, "SAVE", 520, 685, self.saveCriteria)
+        self.save.setFontSize(11) 
+        self.save.setSize(120, 35)
+        self.save.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
+
+        self.cancel = Button(self, 20, "CANCEL", 680, 685, self.cancelCriteria)
+        self.cancel.setFontSize(11) 
+        self.cancel.setSize(120, 35)
+        self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
+
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def gotoMainWindow(self):
         MainWindow    = mainWindow()
         widget.addWidget(MainWindow)
         widget.setCurrentIndex(widget.currentIndex()+1)
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def saveCriteria(self):
+        print("Save Value")
     
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def cancelCriteria(self):
+        print("Cancel Value")
+
     #---------------------------------------------------------------------------------------------------------------------------#
         
     def paintEvent(self, e):
