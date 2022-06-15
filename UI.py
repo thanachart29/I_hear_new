@@ -2,11 +2,11 @@ import sys
 import math
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QComboBox, QHBoxLayout
 from Element import *
 
-State = 0
+State = 2
 # State 0 : ระบบหยุดการทำงาน
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
@@ -119,11 +119,12 @@ class mainWindow(QDialog):
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkRed)) 
 
-            self.setting = Button(self, 20, "  SETTING CRITERIA", 973, 745, self.gotoSettingWindow)
+            self.setting = Button(self, 20, "  SETTING CRITERIA", 973, 745, self.gotoSettingWindow, QtCore.Qt.PointingHandCursor)
             self.setting.setFontSize(12) 
             self.setting.setSize(240, 40)
             self.setting.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
             self.setting.Icon(QtGui.QIcon("icons/settings.png"))
+
         
 
         # ระบบกำลังประมวลผลข้อมูล
@@ -306,7 +307,7 @@ class mainWindow(QDialog):
             self.label.resize(self.pixmap2.width(), self.pixmap2.height())
             self.label.move(317, 270)
 
-            self.setting = Button(self, 20, "  SETTING CRITERIA", 973, 745, self.gotoSettingWindow)
+            self.setting = Button(self, 20, "  SETTING CRITERIA", 973, 745, self.gotoSettingWindow, QtCore.Qt.PointingHandCursor)
             self.setting.setFontSize(12) 
             self.setting.setSize(240, 40)
             self.setting.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
@@ -447,7 +448,7 @@ class settingWindow(QDialog):
         self.weightCriTopic.setSize(250, 40)
         self.weightCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
 
-        self.weightCriTopic1 = Text(self, 0, "กิโลกรัม      ถึง", 504, 390)
+        self.weightCriTopic1 = Text(self, 0, "กิโลกรัม      ถึง", 525, 390)
         self.weightCriTopic1.setFontSize(13) 
         self.weightCriTopic1.setSize(250, 40)
         self.weightCriTopic1.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
@@ -467,7 +468,7 @@ class settingWindow(QDialog):
         self.percentCriTopic.setSize(250, 40)
         self.percentCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
 
-        self.percentCriTopic1 = Text(self, 0, "เปอร์เซ็นต์   ถึง", 503, 450)
+        self.percentCriTopic1 = Text(self, 0, "เปอร์เซ็นต์   ถึง", 525, 450)
         self.percentCriTopic1.setFontSize(13) 
         self.percentCriTopic1.setSize(250, 40)
         self.percentCriTopic1.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
@@ -514,24 +515,50 @@ class settingWindow(QDialog):
 
         #---------------------------------------------------------------------------------------------------#
 
-        self.backToMain = Button(self, 20, "  BACK", 1013, 745, self.gotoMainWindow)
+        self.backToMain = Button(self, 20, "  BACK", 1013, 745, self.gotoMainWindow, QtCore.Qt.PointingHandCursor)
         self.backToMain.setFontSize(12) 
         self.backToMain.setSize(200, 40)
         self.backToMain.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
         self.backToMain.Icon(QtGui.QIcon("icons/back.png"))
 
-        self.save = Button(self, 20, "SAVE", 520, 685, self.saveCriteria)
+        self.save = Button(self, 20, "SAVE", 520, 685, self.saveCriteria, QtCore.Qt.PointingHandCursor)
         self.save.setFontSize(11) 
         self.save.setSize(120, 35)
         self.save.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
 
-        self.cancel = Button(self, 20, "CANCEL", 680, 685, self.cancelCriteria)
+        self.cancel = Button(self, 20, "CANCEL", 680, 685, self.cancelCriteria, QtCore.Qt.PointingHandCursor)
         self.cancel.setFontSize(11) 
         self.cancel.setSize(120, 35)
         self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
 
         #---------------------------------------------------------------------------------------------------#
 
+        self.weightInputInit = InputBox(self, 15, 435, 395, QtCore.Qt.IBeamCursor)
+        self.weightInputInit.setFontSize(12)
+        self.weightInputInit.setSize(120, 35)
+
+        self.weightInputFinal = InputBox(self, 15, 750, 395, QtCore.Qt.IBeamCursor)
+        self.weightInputFinal.setFontSize(12)
+        self.weightInputFinal.setSize(120, 35)
+
+        self.percentInputInit = InputBox(self, 15, 435, 452, QtCore.Qt.IBeamCursor)
+        self.percentInputInit.setFontSize(12)
+        self.percentInputInit.setSize(120, 35)
+
+        self.percentInputFinal = InputBox(self, 15, 750, 452, QtCore.Qt.IBeamCursor)
+        self.percentInputFinal.setFontSize(12)
+        self.percentInputFinal.setSize(120, 35)
+
+        self.amountInput = InputBox(self, 15, 480, 509, QtCore.Qt.IBeamCursor)
+        self.amountInput.setFontSize(12)
+        self.amountInput.setSize(180, 35)
+
+        self.badInput = InputBox(self, 15, 480, 566, QtCore.Qt.IBeamCursor)
+        self.badInput.setFontSize(12)
+        self.badInput.setSize(180, 35)
+
+
+        #---------------------------------------------------------------------------------------------------#
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
@@ -586,4 +613,6 @@ if __name__ == '__main__':
     widget.addWidget(MainWindow)
     widget.setFixedSize(1280, 800)
     widget.show()
+    widget.setWindowTitle("ระบบคัดแยกคุณภาพผลทุเรียนอัตโนมัติ")
+    widget.setWindowIcon(QtGui.QIcon("icons/durian.png"))
     sys.exit(app.exec_())

@@ -54,12 +54,13 @@ class Text():
 
 
 class Button():
-   def __init__(self, window, fontSize, word, posX, posY, Goto):
+   def __init__(self, window, fontSize, word, posX, posY, Goto, cursor):
       self.object = QPushButton(window)
       self.object.setText(word)
       self.object.setFont(QFont("Prompt", fontSize))
       self.object.move(posX, posY)
       self.object.clicked.connect(Goto)
+      self.object.setCursor(QCursor(cursor))
       self.style = ""
       self.pressed = False
       self.ready = False
@@ -88,4 +89,60 @@ class Button():
 
 
 #-------------------------------------------------------#
-        
+
+
+class QLineEdit(QLineEdit):
+   focusSignal = pyqtSignal()
+
+   def focusInEvent(self, event):
+      self.focusSignal.emit()
+
+
+#-------------------------------------------------------#
+
+
+class InputBox():
+   focus_in_signal = pyqtSignal()
+   def __init__(self, window, fontSize, posX, posY, cursor):
+      self.object = QLineEdit(window)
+      self.object.setFont(QFont("Prompt", fontSize))
+      self.object.move(posX, posY)
+      self.object.setAlignment(Qt.AlignCenter)
+      self.object.setCursor(QCursor(cursor))
+      self.enable()
+      self.unfocus()
+      self.focused = False
+      self.object.focusSignal.connect(self.focus)
+
+   def setFontSize(self, fontSize):
+      self.object.setFont(QFont("Prompt", fontSize))
+
+   def setPosition(self, posX, posY):
+      self.object.move(posX, posY)
+
+   def setSize(self, sizeX, sizeY):
+      self.object.resize(sizeX, sizeY)
+   
+   def clear(self):
+      self.object.setText('')
+
+   def focus(self):
+      self.focused = True
+      self.object.setStyleSheet("color: rgb(24, 33, 20); background-color : rgb(43, 43, 43, 40); font-weight: Bold; border-radius: 7px")
+
+   def unfocus(self):
+      self.focused = False
+      self.object.setStyleSheet("color: rgb(24, 33, 20); background-color : rgb(172, 172, 172, 50); font-weight: Bold; border-radius: 7px")
+
+   def disable(self):
+      self.unfocus()
+      self.object.setDisabled(True)
+      
+   def enable(self):
+      self.object.setDisabled(False)
+      
+   def getInput(self):
+      return self.object.text()
+
+
+#-------------------------------------------------------#
