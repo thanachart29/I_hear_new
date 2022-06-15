@@ -1,4 +1,5 @@
 import math
+from pickle import TRUE
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -53,12 +54,12 @@ class Text():
 
 
 class Button():
-   def __init__(self, window, fontSize, word, posX, posY):
+   def __init__(self, window, fontSize, word, posX, posY, Goto):
       self.object = QPushButton(window)
       self.object.setText(word)
       self.object.setFont(QFont("Prompt", fontSize))
       self.object.move(posX, posY)
-      self.object.clicked.connect(self.buttonClick)
+      self.object.clicked.connect(Goto)
       self.style = ""
       self.pressed = False
       self.ready = False
@@ -75,9 +76,6 @@ class Button():
    def setStyle(self, style):
       self.style = style
       self.object.setStyleSheet(style)
-
-   def buttonClick(self):
-      self.pressed = True
 
    def Icon(self, pic):
       self.object.setIcon(pic)
