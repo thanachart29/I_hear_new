@@ -36,12 +36,12 @@ class Window(QMainWindow):
         self.bigTopic = Text(self, 0, "ระบบคัดแยกคุณภาพผลทุเรียน", 125, 78)
         self.bigTopic.setFontSize(21) 
         self.bigTopic.setSize(460, 50)
-        self.bigTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGrey))
+        self.bigTopic.setStyle("color: {}; background-color: white; font-weight: bold;".format(self.color.darkGray))
 
         self.ByTopic = Text(self, 0, "BY BLUEBLINK @FIBO KMUTT", 600, 100)
         self.ByTopic.setFontSize(7) 
         self.ByTopic.setSize(185, 18)
-        self.ByTopic.setStyle("color: grey; background-color: None; font-weight: bold;") 
+        self.ByTopic.setStyle("color: gray; background-color: None; font-weight: bold;") 
 
         self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
         self.PicTopic.setFontSize(18) 
@@ -205,6 +205,11 @@ class Window(QMainWindow):
 
         #---------------------------------------------------------------------------------------------------#
 
+        self.setting = Button(self, 20, "SETTING CRITERIA", 992, 745)
+        self.setting.setFontSize(12) 
+        self.setting.setSize(220, 40)
+        self.setting.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
+        self.setting.Icon(QtGui.QIcon("icons/settings.png"))
         self.show()
 
 
@@ -287,8 +292,10 @@ class Window(QMainWindow):
             painter5.drawEllipse(870, 91, 28, 28)
 
    #---------------------------------------------------------------------------------------------------------------------------#
-           
 
+
+   #---------------------------------------------------------------------------------------------------------------------------# 
+    
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     DurianUI = Window()
