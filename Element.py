@@ -15,7 +15,7 @@ class Color():
       self.lightGreen = "rgb(163, 195, 48)"
       self.green      = "rgb(82, 137, 1)" 
       self.darkGreen  = "rgb(56, 70, 9)" 
-      self.blackGreen = "rgb(28, 36, 0)" 
+      self.blackGreen = "rgb(24, 33, 20)" 
       self.red        = "rgb(211, 47, 47)" 
       self.darkRed    = "rgb(65, 0, 0)" 
 

@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QApplication, QWidget
 from Element import *
 
-State = 2
+State = 0
 # State 0 : ระบบหยุดการทำงาน
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
@@ -47,42 +47,42 @@ class mainWindow(QDialog):
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
-            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
 
             self.DetailTopic = Text(self, 0, "DETAILS", 670, 210)
             self.DetailTopic.setFontSize(18) 
             self.DetailTopic.setSize(131, 46)
-            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
 
             self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
             self.WeightTopic.setFontSize(13) 
             self.WeightTopic.setSize(150, 30)
-            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
             self.WeightTopic1.setFontSize(13) 
             self.WeightTopic1.setSize(150, 30)
-            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
             
             self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
             self.AmountTopic.setFontSize(13) 
             self.AmountTopic.setSize(150, 30)
-            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
             self.AmountTopic1.setFontSize(13) 
             self.AmountTopic1.setSize(150, 30)
-            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
             self.PercentTopic.setFontSize(13) 
             self.PercentTopic.setSize(210, 30)
-            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
             
             self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
             self.PercentTopic1.setFontSize(13) 
             self.PercentTopic1.setSize(150, 30)
-            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
             self.GradeTopic.setFontSize(18) 
@@ -97,17 +97,17 @@ class mainWindow(QDialog):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
             self.WeightVa.setSize(150, 100)
-            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.AmountVa = Text(self, 0, "0", 793, 365)
             self.AmountVa.setFontSize(40) 
             self.AmountVa.setSize(150, 100)
-            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.PercentVa = Text(self, 0, "0", 988, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
-            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.GradeVa = Text(self, 0, "-", 988, 585)
             self.GradeVa.setFontSize(40) 
@@ -131,42 +131,42 @@ class mainWindow(QDialog):
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
-            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
 
             self.DetailTopic = Text(self, 0, "DETAILS", 670, 210)
             self.DetailTopic.setFontSize(18) 
             self.DetailTopic.setSize(131, 46)
-            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
 
             self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
             self.WeightTopic.setFontSize(13) 
             self.WeightTopic.setSize(150, 30)
-            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
             self.WeightTopic1.setFontSize(13) 
             self.WeightTopic1.setSize(150, 30)
-            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
             
             self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
             self.AmountTopic.setFontSize(13) 
             self.AmountTopic.setSize(150, 30)
-            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
             self.AmountTopic1.setFontSize(13) 
             self.AmountTopic1.setSize(150, 30)
-            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
             self.PercentTopic.setFontSize(13) 
             self.PercentTopic.setSize(210, 30)
-            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
             
             self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
             self.PercentTopic1.setFontSize(13) 
             self.PercentTopic1.setSize(150, 30)
-            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
             self.GradeTopic.setFontSize(18) 
@@ -181,17 +181,17 @@ class mainWindow(QDialog):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
             self.WeightVa.setSize(150, 100)
-            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.AmountVa = Text(self, 0, "0", 793, 365)
             self.AmountVa.setFontSize(40) 
             self.AmountVa.setSize(150, 100)
-            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.PercentVa = Text(self, 0, "0", 988, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
-            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.GradeVa = Text(self, 0, "-", 988, 585)
             self.GradeVa.setFontSize(40) 
@@ -209,42 +209,42 @@ class mainWindow(QDialog):
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
-            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
 
             self.DetailTopic = Text(self, 0, "DETAILS", 670, 210)
             self.DetailTopic.setFontSize(18) 
             self.DetailTopic.setSize(131, 46)
-            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
 
             self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
             self.WeightTopic.setFontSize(13) 
             self.WeightTopic.setSize(150, 30)
-            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
             self.WeightTopic1.setFontSize(13) 
             self.WeightTopic1.setSize(150, 30)
-            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
             
             self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
             self.AmountTopic.setFontSize(13) 
             self.AmountTopic.setSize(150, 30)
-            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
             self.AmountTopic1.setFontSize(13) 
             self.AmountTopic1.setSize(150, 30)
-            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
             self.PercentTopic.setFontSize(13) 
             self.PercentTopic.setSize(210, 30)
-            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
             
             self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
             self.PercentTopic1.setFontSize(13) 
             self.PercentTopic1.setSize(150, 30)
-            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.green)) 
 
             self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
             self.GradeTopic.setFontSize(18) 
@@ -259,17 +259,17 @@ class mainWindow(QDialog):
             self.WeightVa = Text(self, 0, WeightValue, 604, 365)
             self.WeightVa.setFontSize(40) 
             self.WeightVa.setSize(150, 100)
-            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.AmountVa = Text(self, 0, AmountValue, 793, 365)
             self.AmountVa.setFontSize(40) 
             self.AmountVa.setSize(150, 100)
-            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.PercentVa = Text(self, 0, PercentValue, 990, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
-            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
 
             self.GradeVa = Text(self, 0, GradeValue, 990, 587)
             self.GradeVa.setFontSize(38) 
@@ -335,7 +335,7 @@ class mainWindow(QDialog):
 
         painter1 = QPainter(self)
         painter1.setPen(QPen(Qt.white))
-        painter1.setBrush(QBrush(QColor(82, 137, 1, 170), Qt.SolidPattern))
+        painter1.setBrush(QBrush(QColor(82, 94, 77), Qt.SolidPattern))
         # For PicTitle
         painter1.drawRoundedRect(125, 225, 15, 15, 2.1, 2.1)
         # For DetailTitle
@@ -427,10 +427,90 @@ class settingWindow(QDialog):
 
         #---------------------------------------------------------------------------------------------------#
 
-        self.PicTopic = Text(self, 0, "SETTING CRITERIA", 45, 210)
-        self.PicTopic.setFontSize(18) 
-        self.PicTopic.setSize(500, 46)
-        self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen)) 
+        self.settingTopic = Text(self, 0, "SETTING CRITERIA", 45, 210)
+        self.settingTopic.setFontSize(18) 
+        self.settingTopic.setSize(500, 46)
+        self.settingTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
+
+        self.gradeTopic = Text(self, 0, "Select Grade", 130, 270)
+        self.gradeTopic.setFontSize(13) 
+        self.gradeTopic.setSize(150, 40)
+        self.gradeTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen))
+
+        self.criteriaTopic = Text(self, 0, "Details for Criteria", 133, 330)
+        self.criteriaTopic.setFontSize(13) 
+        self.criteriaTopic.setSize(200, 40)
+        self.criteriaTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGreen))
+
+        self.weightCriTopic = Text(self, 0, "น้ำหนักของทุเรียน", 125, 390)
+        self.weightCriTopic.setFontSize(13) 
+        self.weightCriTopic.setSize(250, 40)
+        self.weightCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.weightCriTopic1 = Text(self, 0, "กิโลกรัม      ถึง", 504, 390)
+        self.weightCriTopic1.setFontSize(13) 
+        self.weightCriTopic1.setSize(250, 40)
+        self.weightCriTopic1.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+        
+        self.weightCriTopic2 = Text(self, 0, "กิโลกรัม", 800, 390)
+        self.weightCriTopic2.setFontSize(13) 
+        self.weightCriTopic2.setSize(250, 40)
+        self.weightCriTopic2.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.notSelect1 = Text(self, 0, "Not Select", 1000, 390)
+        self.notSelect1.setFontSize(12) 
+        self.notSelect1.setSize(250, 40)
+        self.notSelect1.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+
+        self.percentCriTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 143, 450)
+        self.percentCriTopic.setFontSize(13) 
+        self.percentCriTopic.setSize(250, 40)
+        self.percentCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.percentCriTopic1 = Text(self, 0, "เปอร์เซ็นต์   ถึง", 503, 450)
+        self.percentCriTopic1.setFontSize(13) 
+        self.percentCriTopic1.setSize(250, 40)
+        self.percentCriTopic1.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.percentCriTopic2 = Text(self, 0, "เปอร์เซ็นต์", 810, 450)
+        self.percentCriTopic2.setFontSize(13) 
+        self.percentCriTopic2.setSize(250, 40)
+        self.percentCriTopic2.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.notSelect2 = Text(self, 0, "Not Select", 1000, 450)
+        self.notSelect2.setFontSize(12) 
+        self.notSelect2.setSize(250, 40)
+        self.notSelect2.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+
+        self.amountCriTopic = Text(self, 0, "จำนวนพู", 84, 510)
+        self.amountCriTopic.setFontSize(13) 
+        self.amountCriTopic.setSize(250, 40)
+        self.amountCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.notSelect3 = Text(self, 0, "Not Select", 1000, 510)
+        self.notSelect3.setFontSize(12) 
+        self.notSelect3.setSize(250, 40)
+        self.notSelect3.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+
+        self.badCriTopic = Text(self, 0, "จำนวนตำหนิ (รอยด่าง) ", 154, 570)
+        self.badCriTopic.setFontSize(13) 
+        self.badCriTopic.setSize(250, 40)
+        self.badCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.notSelect4 = Text(self, 0, "Not Select", 1000, 570)
+        self.notSelect4.setFontSize(12) 
+        self.notSelect4.setSize(250, 40)
+        self.notSelect4.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+
+        self.shapeCriTopic = Text(self, 0, "รูปร่างของทุเรียน", 124, 630)
+        self.shapeCriTopic.setFontSize(13) 
+        self.shapeCriTopic.setSize(250, 40)
+        self.shapeCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
+
+        self.notSelect5 = Text(self, 0, "Not Select", 1000, 630)
+        self.notSelect5.setFontSize(12) 
+        self.notSelect5.setSize(250, 40)
+        self.notSelect5.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
 
         #---------------------------------------------------------------------------------------------------#
 
@@ -460,9 +540,18 @@ class settingWindow(QDialog):
 
         painter1 = QPainter(self)
         painter1.setPen(QPen(Qt.white))
-        painter1.setBrush(QBrush(QColor(82, 137, 1, 170), Qt.SolidPattern))
+        painter1.setBrush(QBrush(QColor(82, 94, 77), Qt.SolidPattern))
         # For PicTitle
         painter1.drawRoundedRect(125, 225, 15, 15, 2.1, 2.1)
+
+        painter2 = QPainter(self)
+        painter2.setPen(QPen(Qt.white))
+        painter2.setBrush(QBrush(QColor(163, 184, 154, 100), Qt.SolidPattern))
+        painter2.drawRoundedRect(135, 405, 12, 12, 2, 2)
+        painter2.drawRoundedRect(135, 465, 12, 12, 2, 2)
+        painter2.drawRoundedRect(135, 525, 12, 12, 2, 2)
+        painter2.drawRoundedRect(135, 585, 12, 12, 2, 2)
+        painter2.drawRoundedRect(135, 645, 12, 12, 2, 2)
 
 #---------------------------------------------------------------------------------------------------------------------------#
 
