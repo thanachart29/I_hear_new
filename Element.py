@@ -96,13 +96,17 @@ class QLineEdit(QLineEdit):
 
    def focusInEvent(self, event):
       self.focusSignal.emit()
-
+      super(QLineEdit, self).focusInEvent(event)
+   
+   def focusOutEvent(self, event):
+      self.focusSignal.emit()
+      super(QLineEdit, self).focusOutEvent(event)
+      self.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(43, 43, 43, 50); font-weight: Bold; border-radius: 4px") 
 
 #-------------------------------------------------------#
 
 
 class InputBox():
-   focus_in_signal = pyqtSignal()
    def __init__(self, window, fontSize, posX, posY, cursor):
       self.object = QLineEdit(window)
       self.object.setFont(QFont("Prompt", fontSize))
@@ -128,11 +132,11 @@ class InputBox():
 
    def focus(self):
       self.focused = True
-      self.object.setStyleSheet("color: rgb(24, 33, 20); background-color : rgb(43, 43, 43, 40); font-weight: Bold; border-radius: 7px")
+      self.object.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(163, 195, 48); font-weight: Bold; border-radius: 10px")
 
    def unfocus(self):
       self.focused = False
-      self.object.setStyleSheet("color: rgb(24, 33, 20); background-color : rgb(172, 172, 172, 50); font-weight: Bold; border-radius: 7px")
+      self.object.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(43, 43, 43, 50); font-weight: Bold; border-radius: 4px")
 
    def disable(self):
       self.unfocus()
@@ -144,5 +148,31 @@ class InputBox():
    def getInput(self):
       return self.object.text()
 
-
 #-------------------------------------------------------#
+
+class dropDownList():
+   def __init__(self, window, fontSize, posX, posY, cursor, goto):
+      self.comboState = QComboBox(window)
+      self.comboState.setFont(QFont("Prompt", fontSize))
+      self.comboState.move(posX, posY)
+      self.comboState.setCursor(QCursor(cursor))
+      self.comboState.currentTextChanged.connect(goto)
+      self.style = ""
+
+   def setFontSize(self, fontSize):
+      self.comboState.setFont(QFont("Prompt", fontSize))
+
+   def setPosition(self, posX, posY):
+      self.comboState.move(posX, posY)
+
+   def setSize(self, sizeX, sizeY):
+      self.comboState.resize(sizeX, sizeY)
+
+   def setItem(self, item):
+      self.comboState.addItem(item)
+
+   def setStyle(self, style):
+      self.style = style
+      self.comboState.setStyleSheet(style)
+
+   

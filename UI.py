@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QComboBox, QHBoxLayout
 from Element import *
 
-State = 2
+State = 0
 # State 0 : ระบบหยุดการทำงาน
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
@@ -503,7 +503,7 @@ class settingWindow(QDialog):
         self.notSelect4.setSize(250, 40)
         self.notSelect4.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
 
-        self.shapeCriTopic = Text(self, 0, "รูปร่างของทุเรียน", 124, 630)
+        self.shapeCriTopic = Text(self, 0, "รูปร่างของทุเรียน", 124, 627)
         self.shapeCriTopic.setFontSize(13) 
         self.shapeCriTopic.setSize(250, 40)
         self.shapeCriTopic.setStyle("color: {}; background-color: None;".format(self.color.darkGreen))
@@ -521,12 +521,12 @@ class settingWindow(QDialog):
         self.backToMain.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
         self.backToMain.Icon(QtGui.QIcon("icons/back.png"))
 
-        self.save = Button(self, 20, "SAVE", 520, 685, self.saveCriteria, QtCore.Qt.PointingHandCursor)
+        self.save = Button(self, 20, "SAVE", 680, 685, self.saveCriteria, QtCore.Qt.PointingHandCursor)
         self.save.setFontSize(11) 
         self.save.setSize(120, 35)
         self.save.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
 
-        self.cancel = Button(self, 20, "CANCEL", 680, 685, self.cancelCriteria, QtCore.Qt.PointingHandCursor)
+        self.cancel = Button(self, 20, "CANCEL", 520, 685, self.cancelCriteria, QtCore.Qt.PointingHandCursor)
         self.cancel.setFontSize(11) 
         self.cancel.setSize(120, 35)
         self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
@@ -557,8 +557,101 @@ class settingWindow(QDialog):
         self.badInput.setFontSize(12)
         self.badInput.setSize(180, 35)
 
-
         #---------------------------------------------------------------------------------------------------#
+
+        self.selectGrade = dropDownList(self, 12, 435, 275, QtCore.Qt.PointingHandCursor, self.handleSelectGrade)
+        self.selectGrade.setItem('     Select Grade')
+        self.selectGrade.setItem('     Grade A')
+        self.selectGrade.setItem('     Grade B')
+        self.selectGrade.setItem('     Grade C')
+        self.selectGrade.setSize(300, 35)
+        style = """
+            QComboBox{
+                color: rgb(43, 43, 43); 
+                background-color: rgb(172, 171, 172, 50);  
+                border : 1.5px solid rgb(43, 43, 43, 50); 
+                font-weight: Bold; 
+                border-radius: 4px;
+                padding: 2px;
+            }
+
+            QComboBox QAbstractItemView {
+                outline: none;
+            }
+            
+            QComboBox::down-arrow {
+                image: url(icons/downArrow.png);
+                width: 20px;
+                height: 20px;
+                margin: 10px;
+                padding-right: 30px;
+            } 
+
+            QComboBox::drop-down {
+                border: 0px;
+            } 
+
+            QComboBox QAbstractItemView {
+                background-color: rgb(70, 70, 70); 
+                color: rgb(255, 255, 255);  
+                border: None;
+                selection-background-color: rgb(163, 195, 48);
+            }
+        """
+        self.selectGrade.setStyle(style)
+
+
+
+        self.selectShape = dropDownList(self, 12, 435, 625, QtCore.Qt.PointingHandCursor, self.handleSelectShape)
+        self.selectShape.setItem('     Select Shape')
+        self.selectShape.setItem('     Shape A')
+        self.selectShape.setItem('     Shape B')
+        self.selectShape.setItem('     Out')
+        self.selectShape.setSize(300, 35)
+        style = """
+            QComboBox{
+                color: rgb(43, 43, 43); 
+                background-color: rgb(172, 171, 172, 50);  
+                border : 1.5px solid rgb(43, 43, 43, 50); 
+                font-weight: Bold; 
+                border-radius: 4px;
+                padding: 2px;
+            }
+
+            QComboBox QAbstractItemView {
+                outline: none;
+            }
+            
+            QComboBox::down-arrow {
+                image: url(icons/downArrow.png);
+                width: 20px;
+                height: 20px;
+                margin: 10px;
+                padding-right: 30px;
+            } 
+
+            QComboBox::drop-down {
+                border: 0px;
+            } 
+
+            QComboBox QAbstractItemView {
+                background-color: rgb(70, 70, 70); 
+                color: rgb(255, 255, 255);  
+                border: None;
+                selection-background-color: rgb(163, 195, 48);
+            }
+        """
+        self.selectShape.setStyle(style)
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def handleSelectGrade(self, valueGrade):
+        print(valueGrade)
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def handleSelectShape(self, valueShape):
+        print(valueShape)
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
@@ -603,6 +696,8 @@ class settingWindow(QDialog):
         painter2.drawRoundedRect(135, 585, 12, 12, 2, 2)
         painter2.drawRoundedRect(135, 645, 12, 12, 2, 2)
 
+    #---------------------------------------------------------------------------------------------------------------------------#
+    
 #---------------------------------------------------------------------------------------------------------------------------#
 
     
