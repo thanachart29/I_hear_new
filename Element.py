@@ -133,7 +133,7 @@ class InputBox():
 
    def focus(self):
       self.focused = True
-      self.object.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(163, 195, 48); font-weight: Bold; border-radius: 10px")
+      self.object.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 2.5px solid rgb(43, 43, 43, 140); font-weight: Bold; border-radius: 10px")
 
    def unfocus(self):
       self.focused = False

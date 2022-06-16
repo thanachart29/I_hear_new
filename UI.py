@@ -58,32 +58,32 @@ class mainWindow(QDialog):
             self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
             self.WeightTopic.setFontSize(13) 
             self.WeightTopic.setSize(150, 30)
-            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
             self.WeightTopic1.setFontSize(13) 
             self.WeightTopic1.setSize(150, 30)
-            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
             
             self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
             self.AmountTopic.setFontSize(13) 
             self.AmountTopic.setSize(150, 30)
-            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
             self.AmountTopic1.setFontSize(13) 
             self.AmountTopic1.setSize(150, 30)
-            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
             self.PercentTopic.setFontSize(13) 
             self.PercentTopic.setSize(210, 30)
-            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
             
             self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
             self.PercentTopic1.setFontSize(13) 
             self.PercentTopic1.setSize(150, 30)
-            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
             self.GradeTopic.setFontSize(18) 
@@ -98,17 +98,17 @@ class mainWindow(QDialog):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
             self.WeightVa.setSize(150, 100)
-            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.AmountVa = Text(self, 0, "0", 793, 365)
             self.AmountVa.setFontSize(40) 
             self.AmountVa.setSize(150, 100)
-            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.PercentVa = Text(self, 0, "0", 988, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
-            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.GradeVa = Text(self, 0, "-", 988, 585)
             self.GradeVa.setFontSize(40) 
@@ -525,12 +525,12 @@ class settingWindow(QDialog):
         self.save = Button(self, 20, "SAVE", 680, 685, self.saveCriteria, QtCore.Qt.PointingHandCursor)
         self.save.setFontSize(11) 
         self.save.setSize(120, 35)
-        self.save.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGray))
+        self.save.setStyle("color:{}; background-color: rgb(90, 90, 90); border-radius: 10; font-weight: Bold;".format(self.color.white))
 
         self.cancel = Button(self, 20, "CANCEL", 520, 685, self.cancelCriteria, QtCore.Qt.PointingHandCursor)
         self.cancel.setFontSize(11) 
         self.cancel.setSize(120, 35)
-        self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGray))
+        self.cancel.setStyle("color:{}; background-color: rgb(90, 90, 90); border-radius: 10; font-weight: Bold;".format(self.color.white))
 
         #---------------------------------------------------------------------------------------------------#
 
