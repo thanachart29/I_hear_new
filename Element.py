@@ -107,7 +107,7 @@ class QLineEdit(QLineEdit):
 
 
 class InputBox():
-   def __init__(self, window, fontSize, posX, posY, cursor):
+   def __init__(self, window, fontSize, posX, posY, cursor, goto):
       self.object = QLineEdit(window)
       self.object.setFont(QFont("Prompt", fontSize))
       self.object.move(posX, posY)
@@ -117,6 +117,7 @@ class InputBox():
       self.unfocus()
       self.focused = False
       self.object.focusSignal.connect(self.focus)
+      self.object.textChanged.connect(goto)
 
    def setFontSize(self, fontSize):
       self.object.setFont(QFont("Prompt", fontSize))

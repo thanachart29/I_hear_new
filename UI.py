@@ -1,3 +1,4 @@
+from http.client import BadStatusLine
 import sys
 import math
 from PyQt5 import QtGui, QtCore, QtWidgets
@@ -11,7 +12,7 @@ State = 0
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
 
-# Parameter 
+# Parameter In
 WeightValue  = "15"         # น้ำหนักของทุเรียน
 AmountValue  = "2"          # จำนวนพู
 PercentValue = "50"         # เปอร์เซ็นต์น้ำหนักแห้ง
@@ -461,7 +462,7 @@ class settingWindow(QDialog):
         self.notSelect1 = Text(self, 0, "Not Select", 1000, 390)
         self.notSelect1.setFontSize(12) 
         self.notSelect1.setSize(250, 40)
-        self.notSelect1.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+        self.notSelect1.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGray))
 
         self.percentCriTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 143, 450)
         self.percentCriTopic.setFontSize(13) 
@@ -481,7 +482,7 @@ class settingWindow(QDialog):
         self.notSelect2 = Text(self, 0, "Not Select", 1000, 450)
         self.notSelect2.setFontSize(12) 
         self.notSelect2.setSize(250, 40)
-        self.notSelect2.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+        self.notSelect2.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGray))
 
         self.amountCriTopic = Text(self, 0, "จำนวนพู", 84, 510)
         self.amountCriTopic.setFontSize(13) 
@@ -491,7 +492,7 @@ class settingWindow(QDialog):
         self.notSelect3 = Text(self, 0, "Not Select", 1000, 510)
         self.notSelect3.setFontSize(12) 
         self.notSelect3.setSize(250, 40)
-        self.notSelect3.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+        self.notSelect3.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGray))
 
         self.badCriTopic = Text(self, 0, "จำนวนตำหนิ (รอยด่าง) ", 154, 570)
         self.badCriTopic.setFontSize(13) 
@@ -501,7 +502,7 @@ class settingWindow(QDialog):
         self.notSelect4 = Text(self, 0, "Not Select", 1000, 570)
         self.notSelect4.setFontSize(12) 
         self.notSelect4.setSize(250, 40)
-        self.notSelect4.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+        self.notSelect4.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGray))
 
         self.shapeCriTopic = Text(self, 0, "รูปร่างของทุเรียน", 124, 627)
         self.shapeCriTopic.setFontSize(13) 
@@ -511,7 +512,7 @@ class settingWindow(QDialog):
         self.notSelect5 = Text(self, 0, "Not Select", 1000, 630)
         self.notSelect5.setFontSize(12) 
         self.notSelect5.setSize(250, 40)
-        self.notSelect5.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.green))
+        self.notSelect5.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.darkGray))
 
         #---------------------------------------------------------------------------------------------------#
 
@@ -524,36 +525,36 @@ class settingWindow(QDialog):
         self.save = Button(self, 20, "SAVE", 680, 685, self.saveCriteria, QtCore.Qt.PointingHandCursor)
         self.save.setFontSize(11) 
         self.save.setSize(120, 35)
-        self.save.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
+        self.save.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGray))
 
         self.cancel = Button(self, 20, "CANCEL", 520, 685, self.cancelCriteria, QtCore.Qt.PointingHandCursor)
         self.cancel.setFontSize(11) 
         self.cancel.setSize(120, 35)
-        self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGreen))
+        self.cancel.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.white, self.color.darkGray))
 
         #---------------------------------------------------------------------------------------------------#
 
-        self.weightInputInit = InputBox(self, 15, 435, 395, QtCore.Qt.IBeamCursor)
+        self.weightInputInit = InputBox(self, 15, 435, 395, QtCore.Qt.IBeamCursor, self.weightInit)
         self.weightInputInit.setFontSize(12)
         self.weightInputInit.setSize(120, 35)
 
-        self.weightInputFinal = InputBox(self, 15, 750, 395, QtCore.Qt.IBeamCursor)
+        self.weightInputFinal = InputBox(self, 15, 750, 395, QtCore.Qt.IBeamCursor, self.weightFinal)
         self.weightInputFinal.setFontSize(12)
         self.weightInputFinal.setSize(120, 35)
 
-        self.percentInputInit = InputBox(self, 15, 435, 452, QtCore.Qt.IBeamCursor)
+        self.percentInputInit = InputBox(self, 15, 435, 452, QtCore.Qt.IBeamCursor, self.percentInit)
         self.percentInputInit.setFontSize(12)
         self.percentInputInit.setSize(120, 35)
 
-        self.percentInputFinal = InputBox(self, 15, 750, 452, QtCore.Qt.IBeamCursor)
+        self.percentInputFinal = InputBox(self, 15, 750, 452, QtCore.Qt.IBeamCursor, self.percentFinal)
         self.percentInputFinal.setFontSize(12)
         self.percentInputFinal.setSize(120, 35)
 
-        self.amountInput = InputBox(self, 15, 480, 509, QtCore.Qt.IBeamCursor)
+        self.amountInput = InputBox(self, 15, 480, 509, QtCore.Qt.IBeamCursor, self.amountIn)
         self.amountInput.setFontSize(12)
         self.amountInput.setSize(180, 35)
 
-        self.badInput = InputBox(self, 15, 480, 566, QtCore.Qt.IBeamCursor)
+        self.badInput = InputBox(self, 15, 480, 566, QtCore.Qt.IBeamCursor, self.badIn)
         self.badInput.setFontSize(12)
         self.badInput.setSize(180, 35)
 
@@ -592,14 +593,13 @@ class settingWindow(QDialog):
             } 
 
             QComboBox QAbstractItemView {
-                background-color: rgb(70, 70, 70); 
+                background-color: rgb(90, 90, 90); 
                 color: rgb(255, 255, 255);  
                 border: None;
-                selection-background-color: rgb(163, 195, 48);
+                selection-background-color: rgb(43, 43, 43);
             }
         """
         self.selectGrade.setStyle(style)
-
 
 
         self.selectShape = dropDownList(self, 12, 435, 625, QtCore.Qt.PointingHandCursor, self.handleSelectShape)
@@ -635,10 +635,10 @@ class settingWindow(QDialog):
             } 
 
             QComboBox QAbstractItemView {
-                background-color: rgb(70, 70, 70); 
+                background-color: rgb(90, 90, 90); 
                 color: rgb(255, 255, 255);  
                 border: None;
-                selection-background-color: rgb(163, 195, 48);
+                selection-background-color: rgb(43, 43, 43);
             }
         """
         self.selectShape.setStyle(style)
@@ -646,12 +646,28 @@ class settingWindow(QDialog):
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def handleSelectGrade(self, valueGrade):
-        print(valueGrade)
-
-    #---------------------------------------------------------------------------------------------------------------------------#
+        self.GradeIn = valueGrade
 
     def handleSelectShape(self, valueShape):
-        print(valueShape)
+        self.ShapeIn = valueShape
+
+    def weightInit(self, valueWeight):
+        self.WeightInit = valueWeight
+
+    def weightFinal(self, valueWeight):
+        self.WeightFinal = valueWeight
+
+    def percentInit(self, valuePercent):
+        self.PercentInit = valuePercent
+
+    def percentFinal(self, valuePercent):
+        self.PercentFinal = valuePercent
+
+    def amountIn(self, valueAmount):
+        self.AmountIn = valueAmount
+  
+    def badIn(self, valueBad):
+        self.BadIn = valueBad
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
