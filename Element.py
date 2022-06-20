@@ -101,7 +101,7 @@ class QLineEdit(QLineEdit):
    def focusOutEvent(self, event):
       self.focusSignal.emit()
       super(QLineEdit, self).focusOutEvent(event)
-      self.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(43, 43, 43, 50); font-weight: Bold; border-radius: 4px") 
+      self.setStyleSheet("color: rgb(120, 120, 120); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(43, 43, 43, 50); font-weight: Bold; border-radius: 4px") 
 
 #-------------------------------------------------------#
 
@@ -137,7 +137,7 @@ class InputBox():
 
    def unfocus(self):
       self.focused = False
-      self.object.setStyleSheet("color: rgb(43, 43, 43); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(43, 43, 43, 50); font-weight: Bold; border-radius: 4px")
+      self.object.setStyleSheet("color: rgb(120, 120, 120); background-color : rgb(172, 172, 172, 50); border : 1.5px solid rgb(43, 43, 43, 50); font-weight: Bold; border-radius: 4px")
 
    def disable(self):
       self.unfocus()
@@ -148,7 +148,13 @@ class InputBox():
       
    def getInput(self):
       return self.object.text()
+
+   def clearText(self):
+      self.object.clear()
    
+   def textChange(self, goto):
+      self.object.textChanged.connect(goto)
+
    def placeHolderText(self, text):
       self.object.setPlaceholderText(text)
 
@@ -178,8 +184,7 @@ class dropDownList():
    def setStyle(self, style):
       self.style = style
       self.comboState.setStyleSheet(style)
-
-
+   
 #-------------------------------------------------------#
 
 

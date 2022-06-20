@@ -20,10 +20,13 @@ GradeValue   = "A"          # เกรดของทุเรียน
 PicAngle1    = 'pics/Durian1.jpg'
 PicAngle2    = 'pics/Durian2.jpg'
 
-gradeA = criteriaDurian('A', 0, 0, 0, 0, 0, 0, 0)
-gradeB = criteriaDurian('B', 0, 0, 0, 0, 0, 0, 0)
-gradeC = criteriaDurian('C', 0, 0, 0, 0, 0, 0, 0)
-GradeIn = "     Select Grade"
+gradeA = criteriaDurian('A', 0, 0, 0, 0, 0, 0, '')
+gradeB = criteriaDurian('B', 0, 0, 0, 0, 0, 0, '')
+gradeC = criteriaDurian('C', 0, 0, 0, 0, 0, 0, '')
+
+gradeASave = criteriaDurian('A', 0, 0, 0, 0, 0, 0, '')
+gradeBSave = criteriaDurian('B', 0, 0, 0, 0, 0, 0, '')
+gradeCSave = criteriaDurian('C', 0, 0, 0, 0, 0, 0, '')
 
 class mainWindow(QDialog):
     def __init__(self):
@@ -670,13 +673,6 @@ class settingWindow(QDialog):
         self.weightInputInit.setFontSize(12)
         self.weightInputInit.setSize(120, 35)
         self.weightInputInit.placeHolderText("0")
-        if (GradeIn == 'Grade A'):
-            self.weightInputInit.placeHolderText(gradeA.weightInitDurian)
-        if (GradeIn == 'Grade B'):
-            self.weightInputInit.placeHolderText(gradeB.weightInitDurian)
-        if (GradeIn == 'Grade C'):
-            self.weightInputInit.placeHolderText(gradeC.weightInitDurian)
-
 
         self.weightInputFinal = InputBox(self, 15, 750, 395, QtCore.Qt.IBeamCursor, self.weightFinal)
         self.weightInputFinal.setFontSize(12)
@@ -708,72 +704,147 @@ class settingWindow(QDialog):
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def handleSelectGrade(self, value):
-        GradeIn == value
-        print(GradeIn)
+        self.GradeIn = value
+        if (self.GradeIn == "     Grade A"):
+            self.weightInputInit.placeHolderText(gradeASave.weightInitDurian)
+            self.weightInputFinal.placeHolderText(gradeASave.weightFinalDurian)
+            self.percentInputInit.placeHolderText(gradeASave.percentInitDurian)
+            self.percentInputFinal.placeHolderText(gradeASave.percentFinalDurian)   
+            self.amountInput.placeHolderText(gradeASave.amountDurian)        
+            self.badInput.placeHolderText(gradeASave.badDurian)           
+        if (self.GradeIn == "     Grade B"):
+            self.weightInputInit.placeHolderText(gradeBSave.weightInitDurian)
+            self.weightInputFinal.placeHolderText(gradeBSave.weightFinalDurian)
+            self.percentInputInit.placeHolderText(gradeBSave.percentInitDurian)
+            self.percentInputFinal.placeHolderText(gradeBSave.percentFinalDurian)   
+            self.amountInput.placeHolderText(gradeBSave.amountDurian)        
+            self.badInput.placeHolderText(gradeBSave.badDurian)   
+        if (self.GradeIn == "     Grade C"):
+            self.weightInputInit.placeHolderText(gradeCSave.weightInitDurian)
+            self.weightInputFinal.placeHolderText(gradeCSave.weightFinalDurian)
+            self.percentInputInit.placeHolderText(gradeCSave.percentInitDurian)
+            self.percentInputFinal.placeHolderText(gradeCSave.percentFinalDurian)   
+            self.amountInput.placeHolderText(gradeCSave.amountDurian)        
+            self.badInput.placeHolderText(gradeCSave.badDurian)  
+        print(self.GradeIn)
+ 
 
     def weightInit(self, valueWeight):
         self.WeightInit = valueWeight
-        if (GradeIn == 'Grade A'):
+        if (self.GradeIn == "     Grade A"):
             gradeA.weightInitDurian = self.WeightInit
-        if (GradeIn == 'Grade B'):
+        if (self.GradeIn == "     Grade B"):
             gradeB.weightInitDurian = self.WeightInit
-        if (GradeIn == 'Grade C'):
+        if (self.GradeIn == "     Grade C"):
             gradeC.weightInitDurian = self.WeightInit
 
     def weightFinal(self, valueWeight):
         self.WeightFinal = valueWeight
+        if (self.GradeIn == "     Grade A"):
+            gradeA.weightFinalDurian = self.WeightFinal
+        if (self.GradeIn == "     Grade B"):
+            gradeB.weightFinalDurian = self.WeightFinal
+        if (self.GradeIn == "     Grade C"):
+            gradeC.weightFinalDurian = self.WeightFinal
 
     def percentInit(self, valuePercent):
         self.PercentInit = valuePercent
+        if (self.GradeIn == "     Grade A"):
+            gradeA.percentInitDurian = self.PercentInit
+        if (self.GradeIn == "     Grade B"):
+            gradeB.percentInitDurian = self.PercentInit
+        if (self.GradeIn == "     Grade C"):
+            gradeC.percentInitDurian = self.PercentInit
 
     def percentFinal(self, valuePercent):
         self.PercentFinal = valuePercent
+        if (self.GradeIn == "     Grade A"):
+            gradeA.percentFinalDurian = self.PercentFinal
+        if (self.GradeIn == "     Grade B"):
+            gradeB.percentFinalDurian = self.PercentFinal
+        if (self.GradeIn == "     Grade C"):
+            gradeC.percentFinalDurian = self.PercentFinal
 
     def amountIn(self, valueAmount):
         self.AmountIn = valueAmount
+        if (self.GradeIn == "     Grade A"):
+            gradeA.amountDurian = self.AmountIn
+        if (self.GradeIn == "     Grade B"):
+            gradeB.amountDurian = self.AmountIn
+        if (self.GradeIn == "     Grade C"):
+            gradeC.amountDurian = self.AmountIn
   
     def badIn(self, valueBad):
         self.BadIn = valueBad
+        if (self.GradeIn == "     Grade A"):
+            gradeA.badDurian = self.BadIn
+        if (self.GradeIn == "     Grade B"):
+            gradeB.badDurian = self.BadIn
+        if (self.GradeIn == "     Grade C"):
+            gradeC.badDurian = self.BadIn
     
     def handleSelectShape(self, valueShape):
         self.ShapeIn = valueShape
+        if (self.GradeIn == "     Grade A"):
+            gradeA.badDurian = self.BadIn
+        if (self.GradeIn == "     Grade B"):
+            gradeB.badDurian = self.BadIn
+        if (self.GradeIn == "     Grade C"):
+            gradeC.badDurian = self.BadIn
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def CheckSelectWeight(self, state):
         if state == QtCore.Qt.Checked:
-            self.notSelectWeight = 1
-            print('Not Select') 
-        else:
-            self.notSelectWeight = 0
+            if (self.GradeIn == "     Grade A"):
+                gradeA.weightInitDurian = 0
+                gradeA.weightFinalDurian = 0
+                print(gradeA.weightInitDurian)
+            if (self.GradeIn == "     Grade B"):
+                gradeB.weightInitDurian = 0
+                gradeB.weightFinalDurian = 0
+            if (self.GradeIn == "     Grade C"):
+                gradeC.weightInitDurian = 0
+                gradeC.weightFinalDurian = 0
 
     def CheckSelectPercent(self, state):
         if state == QtCore.Qt.Checked:
-            self.notSelectPercent = 1
-            print('Not Select') 
-        else:
-            self.notSelectPercent = 0
+            if (self.GradeIn == "     Grade A"):
+                gradeA.percentInitDurian = 0
+                gradeA.percentFinalDurian = 0
+            if (self.GradeIn == "     Grade B"):
+                gradeB.percentInitDurian = 0
+                gradeB.percentFinalDurian = 0
+            if (self.GradeIn == "     Grade C"):
+                gradeC.percentInitDurian = 0
+                gradeC.percentFinalDurian = 0
 
     def CheckSelectAmount(self, state):
         if state == QtCore.Qt.Checked:
-            self.notSelectAmount = 1
-            print('Not Select') 
-        else:
-            self.notSelectAmount = 0
+            if (self.GradeIn == "     Grade A"):
+                gradeA.amountDurian = 0
+            if (self.GradeIn == "     Grade B"):
+                gradeB.amountDurian = 0
+            if (self.GradeIn == "     Grade C"):
+                gradeC.amountDurian = 0
 
     def CheckSelectBad(self, state):
         if state == QtCore.Qt.Checked:
-            self.notSelectBad = 1
-            print('Not Select') 
-        else:
-            self.notSelectBad = 0
+            if (self.GradeIn == "     Grade A"):
+                gradeA.badDurian = 0
+            if (self.GradeIn == "     Grade B"):
+                gradeB.badDurian = 0
+            if (self.GradeIn == "     Grade C"):
+                gradeC.badDurian = 0
 
     def CheckSelectShape(self, state):
         if state == QtCore.Qt.Checked:
-            self.notSelectShape = 1
-            print('Not Select') 
-        else:
-            self.notSelectShape = 0
+            if (self.GradeIn == "     Grade A"):
+                gradeA.shapeDurian = ''
+            if (self.GradeIn == "     Grade B"):
+                gradeB.shapeDurian = ''
+            if (self.GradeIn == "     Grade C"):
+                gradeC.shapeDurian = ''
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
@@ -786,7 +857,33 @@ class settingWindow(QDialog):
 
     def saveCriteria(self):
         print("Save Value")
-    
+        if (self.GradeIn == "     Grade A"):
+            gradeASave.gradeDurian = 'A'
+            gradeASave.weightInitDurian     = gradeA.weightInitDurian
+            gradeASave.weightFinalDurian    = gradeA.weightFinalDurian
+            gradeASave.percentInitDurian    = gradeA.percentInitDurian
+            gradeASave.percentFinalDurian   = gradeA.percentFinalDurian
+            gradeASave.amountDurian         = gradeA.amountDurian
+            gradeASave.badDurian            = gradeA.badDurian
+            gradeASave.shapeDurian          = gradeA.shapeDurian
+        if (self.GradeIn == "     Grade B"):
+            gradeBSave.gradeDurian = 'B'
+            gradeBSave.weightInitDurian     = gradeB.weightInitDurian
+            gradeBSave.weightFinalDurian    = gradeB.weightFinalDurian
+            gradeBSave.percentInitDurian    = gradeB.percentInitDurian
+            gradeBSave.percentFinalDurian   = gradeB.percentFinalDurian
+            gradeBSave.amountDurian         = gradeB.amountDurian
+            gradeBSave.badDurian            = gradeB.badDurian
+            gradeBSave.shapeDurian          = gradeB.shapeDurian   
+        if (self.GradeIn == "     Grade C"):
+            gradeCSave.gradeDurian = 'C'
+            gradeCSave.weightInitDurian     = gradeC.weightInitDurian
+            gradeCSave.weightFinalDurian    = gradeC.weightFinalDurian
+            gradeCSave.percentInitDurian    = gradeC.percentInitDurian
+            gradeCSave.percentFinalDurian   = gradeC.percentFinalDurian
+            gradeCSave.amountDurian         = gradeC.amountDurian
+            gradeCSave.badDurian            = gradeC.badDurian  
+
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def cancelCriteria(self):
