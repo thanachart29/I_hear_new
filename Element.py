@@ -148,6 +148,9 @@ class InputBox():
       
    def getInput(self):
       return self.object.text()
+   
+   def placeHolderText(self, text):
+      self.object.setPlaceholderText(text)
 
 #-------------------------------------------------------#
 
@@ -176,4 +179,41 @@ class dropDownList():
       self.style = style
       self.comboState.setStyleSheet(style)
 
-   
+
+#-------------------------------------------------------#
+
+
+class CheckBox():
+   def __init__(self, window, posX, posY, cursor, goto):
+      self.check = QCheckBox(window)
+      self.check.setChecked(True)
+      self.check.move(posX, posY)
+      self.check.setCursor(QCursor(cursor))
+      self.check.stateChanged.connect(goto)
+      self.check.setChecked(False)
+      self.style = "" 
+
+   def setPosition(self, posX, posY):
+      self.check.move(posX, posY)
+
+   def setSize(self, sizeX, sizeY):
+      self.check.resize(sizeX, sizeY)
+
+   def setStyle(self, style):
+      self.style = style
+      self.check.setStyleSheet(style)
+
+
+#-------------------------------------------------------#
+
+
+class criteriaDurian:
+   def __init__(self, grade, weightInit, weightFinal, percentInit, percentFinal, amount, bad, shape):
+      self.gradeDurian = grade
+      self.weightInitDurian = weightInit
+      self.weightFinalDurian = weightFinal
+      self.percentInitDurian = percentInit
+      self.percentFinalDurian = percentFinal
+      self.amountDurian = amount
+      self.badDurian = bad
+      self.shapeDurian = shape

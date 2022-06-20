@@ -7,7 +7,7 @@ from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QComboBox, QHBoxLayout
 from Element import *
 
-State = 0
+State = 2
 # State 0 : ระบบหยุดการทำงาน
 # State 1 : ระบบกำลังประมวลผล
 # State 2 : ระบบทำงานเสร็จสมบูรณ์
@@ -19,6 +19,11 @@ PercentValue = "50"         # เปอร์เซ็นต์น้ำหน�
 GradeValue   = "A"          # เกรดของทุเรียน
 PicAngle1    = 'pics/Durian1.jpg'
 PicAngle2    = 'pics/Durian2.jpg'
+
+gradeA = criteriaDurian('A', 0, 0, 0, 0, 0, 0, 0)
+gradeB = criteriaDurian('B', 0, 0, 0, 0, 0, 0, 0)
+gradeC = criteriaDurian('C', 0, 0, 0, 0, 0, 0, 0)
+GradeIn = "     Select Grade"
 
 class mainWindow(QDialog):
     def __init__(self):
@@ -143,32 +148,32 @@ class mainWindow(QDialog):
             self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
             self.WeightTopic.setFontSize(13) 
             self.WeightTopic.setSize(150, 30)
-            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
             self.WeightTopic1.setFontSize(13) 
             self.WeightTopic1.setSize(150, 30)
-            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
             
             self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
             self.AmountTopic.setFontSize(13) 
             self.AmountTopic.setSize(150, 30)
-            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
             self.AmountTopic1.setFontSize(13) 
             self.AmountTopic1.setSize(150, 30)
-            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
             self.PercentTopic.setFontSize(13) 
             self.PercentTopic.setSize(210, 30)
-            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
             
             self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
             self.PercentTopic1.setFontSize(13) 
             self.PercentTopic1.setSize(150, 30)
-            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
             self.GradeTopic.setFontSize(18) 
@@ -183,17 +188,17 @@ class mainWindow(QDialog):
             self.WeightVa = Text(self, 0, "0", 604, 365)
             self.WeightVa.setFontSize(40) 
             self.WeightVa.setSize(150, 100)
-            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.AmountVa = Text(self, 0, "0", 793, 365)
             self.AmountVa.setFontSize(40) 
             self.AmountVa.setSize(150, 100)
-            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.PercentVa = Text(self, 0, "0", 988, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
-            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.GradeVa = Text(self, 0, "-", 988, 585)
             self.GradeVa.setFontSize(40) 
@@ -221,32 +226,32 @@ class mainWindow(QDialog):
             self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
             self.WeightTopic.setFontSize(13) 
             self.WeightTopic.setSize(150, 30)
-            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
             self.WeightTopic1.setFontSize(13) 
             self.WeightTopic1.setSize(150, 30)
-            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
             
             self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
             self.AmountTopic.setFontSize(13) 
             self.AmountTopic.setSize(150, 30)
-            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
             self.AmountTopic1.setFontSize(13) 
             self.AmountTopic1.setSize(150, 30)
-            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
             self.PercentTopic.setFontSize(13) 
             self.PercentTopic.setSize(210, 30)
-            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
             
             self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
             self.PercentTopic1.setFontSize(13) 
             self.PercentTopic1.setSize(150, 30)
-            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.green)) 
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
 
             self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
             self.GradeTopic.setFontSize(18) 
@@ -261,17 +266,17 @@ class mainWindow(QDialog):
             self.WeightVa = Text(self, 0, WeightValue, 604, 365)
             self.WeightVa.setFontSize(40) 
             self.WeightVa.setSize(150, 100)
-            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.AmountVa = Text(self, 0, AmountValue, 793, 365)
             self.AmountVa.setFontSize(40) 
             self.AmountVa.setSize(150, 100)
-            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.PercentVa = Text(self, 0, PercentValue, 990, 365)
             self.PercentVa.setFontSize(40) 
             self.PercentVa.setSize(150, 100)
-            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkGreen)) 
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
 
             self.GradeVa = Text(self, 0, GradeValue, 990, 587)
             self.GradeVa.setFontSize(38) 
@@ -364,7 +369,7 @@ class mainWindow(QDialog):
         if (State == 0):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(211, 47, 47, 25)))
-            painter4.setBrush(QBrush(QColor(211, 47, 47, 25), Qt.SolidPattern))
+            painter4.setBrush(QBrush(QColor(211, 47, 47, 20), Qt.SolidPattern))
             # For status
             painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
 
@@ -379,7 +384,7 @@ class mainWindow(QDialog):
         if (State == 1):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(255, 210, 85, 25)))
-            painter4.setBrush(QBrush(QColor(255, 210, 85, 25), Qt.SolidPattern))
+            painter4.setBrush(QBrush(QColor(255, 210, 85, 20), Qt.SolidPattern))
             # For status
             painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
 
@@ -394,7 +399,7 @@ class mainWindow(QDialog):
         if (State == 2):
             painter4 = QPainter(self)
             painter4.setPen(QPen(QColor(163, 195, 48, 25)))
-            painter4.setBrush(QBrush(QColor(163, 195, 48, 25), Qt.SolidPattern))
+            painter4.setBrush(QBrush(QColor(163, 195, 48, 20), Qt.SolidPattern))
             # For status
             painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
 
@@ -534,32 +539,6 @@ class settingWindow(QDialog):
 
         #---------------------------------------------------------------------------------------------------#
 
-        self.weightInputInit = InputBox(self, 15, 435, 395, QtCore.Qt.IBeamCursor, self.weightInit)
-        self.weightInputInit.setFontSize(12)
-        self.weightInputInit.setSize(120, 35)
-
-        self.weightInputFinal = InputBox(self, 15, 750, 395, QtCore.Qt.IBeamCursor, self.weightFinal)
-        self.weightInputFinal.setFontSize(12)
-        self.weightInputFinal.setSize(120, 35)
-
-        self.percentInputInit = InputBox(self, 15, 435, 452, QtCore.Qt.IBeamCursor, self.percentInit)
-        self.percentInputInit.setFontSize(12)
-        self.percentInputInit.setSize(120, 35)
-
-        self.percentInputFinal = InputBox(self, 15, 750, 452, QtCore.Qt.IBeamCursor, self.percentFinal)
-        self.percentInputFinal.setFontSize(12)
-        self.percentInputFinal.setSize(120, 35)
-
-        self.amountInput = InputBox(self, 15, 480, 509, QtCore.Qt.IBeamCursor, self.amountIn)
-        self.amountInput.setFontSize(12)
-        self.amountInput.setSize(180, 35)
-
-        self.badInput = InputBox(self, 15, 480, 566, QtCore.Qt.IBeamCursor, self.badIn)
-        self.badInput.setFontSize(12)
-        self.badInput.setSize(180, 35)
-
-        #---------------------------------------------------------------------------------------------------#
-
         self.selectGrade = dropDownList(self, 12, 435, 275, QtCore.Qt.PointingHandCursor, self.handleSelectGrade)
         self.selectGrade.setItem('     Select Grade')
         self.selectGrade.setItem('     Grade A')
@@ -643,16 +622,103 @@ class settingWindow(QDialog):
         """
         self.selectShape.setStyle(style)
 
+        # ------------------------------------------------------------------------------------------#
+
+        style = """
+            QCheckBox{
+                background-color: white;
+                border-radius: 2; 
+                border-color: rgb(43, 43, 43);
+            }
+            QCheckBox::indicator{
+                width: 22px;
+                height: 22px;
+            }
+            QCheckBox::indicator:checked{
+                background: url(icons/tick.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                border-radius: 2; 
+                border-color: rgb(43, 43, 43);
+            }
+
+        """
+
+        #---------------------------------------------------------------------------------------------------#
+
+        self.checkbox = CheckBox(self, 1050, 400, QtCore.Qt.PointingHandCursor, self.CheckSelectWeight)
+        self.checkbox.setStyle(style)
+        self.checkbox.setSize(22,22)
+
+        self.checkbox1 = CheckBox(self, 1050, 460, QtCore.Qt.PointingHandCursor, self.CheckSelectPercent)
+        self.checkbox1.setStyle(style)
+        self.checkbox1.setSize(22,22)
+
+        self.checkbox2 = CheckBox(self, 1050, 520, QtCore.Qt.PointingHandCursor, self.CheckSelectAmount)
+        self.checkbox2.setStyle(style)
+        self.checkbox2.setSize(22,22)
+
+        self.checkbox3 = CheckBox(self, 1050, 580, QtCore.Qt.PointingHandCursor, self.CheckSelectBad)
+        self.checkbox3.setStyle(style)
+        self.checkbox3.setSize(22,22)        
+
+        self.checkbox4 = CheckBox(self, 1050, 640, QtCore.Qt.PointingHandCursor, self.CheckSelectShape)
+        self.checkbox4.setStyle(style)
+        self.checkbox4.setSize(22,22)  
+
+        self.weightInputInit = InputBox(self, 15, 435, 395, QtCore.Qt.IBeamCursor, self.weightInit)
+        self.weightInputInit.setFontSize(12)
+        self.weightInputInit.setSize(120, 35)
+        self.weightInputInit.placeHolderText("0")
+        if (GradeIn == 'Grade A'):
+            self.weightInputInit.placeHolderText(gradeA.weightInitDurian)
+        if (GradeIn == 'Grade B'):
+            self.weightInputInit.placeHolderText(gradeB.weightInitDurian)
+        if (GradeIn == 'Grade C'):
+            self.weightInputInit.placeHolderText(gradeC.weightInitDurian)
+
+
+        self.weightInputFinal = InputBox(self, 15, 750, 395, QtCore.Qt.IBeamCursor, self.weightFinal)
+        self.weightInputFinal.setFontSize(12)
+        self.weightInputFinal.setSize(120, 35)
+        self.weightInputFinal.placeHolderText("0")
+
+        self.percentInputInit = InputBox(self, 15, 435, 452, QtCore.Qt.IBeamCursor, self.percentInit)
+        self.percentInputInit.setFontSize(12)
+        self.percentInputInit.setSize(120, 35)
+        self.percentInputInit.placeHolderText("0")
+
+        self.percentInputFinal = InputBox(self, 15, 750, 452, QtCore.Qt.IBeamCursor, self.percentFinal)
+        self.percentInputFinal.setFontSize(12)
+        self.percentInputFinal.setSize(120, 35)
+        self.percentInputFinal.placeHolderText("0")
+
+        self.amountInput = InputBox(self, 15, 480, 509, QtCore.Qt.IBeamCursor, self.amountIn)
+        self.amountInput.setFontSize(12)
+        self.amountInput.setSize(180, 35)
+        self.amountInput.placeHolderText("0")
+
+        self.badInput = InputBox(self, 15, 480, 566, QtCore.Qt.IBeamCursor, self.badIn)
+        self.badInput.setFontSize(12)
+        self.badInput.setSize(180, 35)
+        self.badInput.placeHolderText("0")
+
+        #---------------------------------------------------------------------------------------------------#
+
     #---------------------------------------------------------------------------------------------------------------------------#
 
-    def handleSelectGrade(self, valueGrade):
-        self.GradeIn = valueGrade
-
-    def handleSelectShape(self, valueShape):
-        self.ShapeIn = valueShape
+    def handleSelectGrade(self, value):
+        GradeIn == value
+        print(GradeIn)
 
     def weightInit(self, valueWeight):
         self.WeightInit = valueWeight
+        if (GradeIn == 'Grade A'):
+            gradeA.weightInitDurian = self.WeightInit
+        if (GradeIn == 'Grade B'):
+            gradeB.weightInitDurian = self.WeightInit
+        if (GradeIn == 'Grade C'):
+            gradeC.weightInitDurian = self.WeightInit
 
     def weightFinal(self, valueWeight):
         self.WeightFinal = valueWeight
@@ -668,6 +734,46 @@ class settingWindow(QDialog):
   
     def badIn(self, valueBad):
         self.BadIn = valueBad
+    
+    def handleSelectShape(self, valueShape):
+        self.ShapeIn = valueShape
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def CheckSelectWeight(self, state):
+        if state == QtCore.Qt.Checked:
+            self.notSelectWeight = 1
+            print('Not Select') 
+        else:
+            self.notSelectWeight = 0
+
+    def CheckSelectPercent(self, state):
+        if state == QtCore.Qt.Checked:
+            self.notSelectPercent = 1
+            print('Not Select') 
+        else:
+            self.notSelectPercent = 0
+
+    def CheckSelectAmount(self, state):
+        if state == QtCore.Qt.Checked:
+            self.notSelectAmount = 1
+            print('Not Select') 
+        else:
+            self.notSelectAmount = 0
+
+    def CheckSelectBad(self, state):
+        if state == QtCore.Qt.Checked:
+            self.notSelectBad = 1
+            print('Not Select') 
+        else:
+            self.notSelectBad = 0
+
+    def CheckSelectShape(self, state):
+        if state == QtCore.Qt.Checked:
+            self.notSelectShape = 1
+            print('Not Select') 
+        else:
+            self.notSelectShape = 0
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
