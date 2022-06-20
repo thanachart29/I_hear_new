@@ -20,13 +20,13 @@ GradeValue   = "A"          # เกรดของทุเรียน
 PicAngle1    = 'pics/Durian1.jpg'
 PicAngle2    = 'pics/Durian2.jpg'
 
-gradeA = criteriaDurian('A', 0, 0, 0, 0, 0, 0, '')
-gradeB = criteriaDurian('B', 0, 0, 0, 0, 0, 0, '')
-gradeC = criteriaDurian('C', 0, 0, 0, 0, 0, 0, '')
+gradeA = criteriaDurian('A', '0', '0', '0', '0', '0', '0', '')
+gradeB = criteriaDurian('B', '0', '0', '0', '0', '0', '0', '')
+gradeC = criteriaDurian('C', '0', '0', '0', '0', '0', '0', '')
 
-gradeASave = criteriaDurian('A', 0, 0, 0, 0, 0, 0, '')
-gradeBSave = criteriaDurian('B', 0, 0, 0, 0, 0, 0, '')
-gradeCSave = criteriaDurian('C', 0, 0, 0, 0, 0, 0, '')
+gradeASave = criteriaDurian('A', '0', '0', '0', '0', '0', '0', '')
+gradeBSave = criteriaDurian('B', '0', '0', '0', '0', '0', '0', '')
+gradeCSave = criteriaDurian('C', '0', '0', '0', '0', '0', '0', '')
 
 class mainWindow(QDialog):
     def __init__(self):
@@ -652,22 +652,27 @@ class settingWindow(QDialog):
         self.checkbox = CheckBox(self, 1050, 400, QtCore.Qt.PointingHandCursor, self.CheckSelectWeight)
         self.checkbox.setStyle(style)
         self.checkbox.setSize(22,22)
+        self.checkbox.setCheck(False)
 
         self.checkbox1 = CheckBox(self, 1050, 460, QtCore.Qt.PointingHandCursor, self.CheckSelectPercent)
         self.checkbox1.setStyle(style)
         self.checkbox1.setSize(22,22)
+        self.checkbox1.setCheck(False)
 
         self.checkbox2 = CheckBox(self, 1050, 520, QtCore.Qt.PointingHandCursor, self.CheckSelectAmount)
         self.checkbox2.setStyle(style)
         self.checkbox2.setSize(22,22)
+        self.checkbox2.setCheck(False)
 
         self.checkbox3 = CheckBox(self, 1050, 580, QtCore.Qt.PointingHandCursor, self.CheckSelectBad)
         self.checkbox3.setStyle(style)
         self.checkbox3.setSize(22,22)        
+        self.checkbox3.setCheck(False)
 
         self.checkbox4 = CheckBox(self, 1050, 640, QtCore.Qt.PointingHandCursor, self.CheckSelectShape)
         self.checkbox4.setStyle(style)
-        self.checkbox4.setSize(22,22)  
+        self.checkbox4.setSize(22,22) 
+        self.checkbox4.setCheck(False) 
 
         self.weightInputInit = InputBox(self, 15, 435, 395, QtCore.Qt.IBeamCursor, self.weightInit)
         self.weightInputInit.setFontSize(12)
@@ -711,7 +716,40 @@ class settingWindow(QDialog):
             self.percentInputInit.placeHolderText(gradeASave.percentInitDurian)
             self.percentInputFinal.placeHolderText(gradeASave.percentFinalDurian)   
             self.amountInput.placeHolderText(gradeASave.amountDurian)        
-            self.badInput.placeHolderText(gradeASave.badDurian)           
+            self.badInput.placeHolderText(gradeASave.badDurian)     
+
+            self.selectShape.clearData()
+            self.selectShape.setItem(gradeASave.shapeDurian)
+            self.selectShape.setItem('     Select Shape')
+            self.selectShape.setItem('     Shape A')
+            self.selectShape.setItem('     Shape B')
+            self.selectShape.setItem('     Out')
+
+            if (self.ACheckWeight == 0):
+                self.checkbox.setCheck(True)
+            else:
+                self.checkbox.setCheck(False)
+
+            if (self.ACheckPercent == 0):
+                self.checkbox1.setCheck(True)
+            else:
+                self.checkbox1.setCheck(False)
+
+            if (self.ACheckAmount == 0):
+                self.checkbox2.setCheck(True)
+            else:
+                self.checkbox2.setCheck(False)
+
+            if (self.ACheckBad == 0):
+                self.checkbox3.setCheck(True)
+            else:
+                self.checkbox3.setCheck(False) 
+
+            if (self.ACheckShape == 0):
+                self.checkbox4.setCheck(True)
+            else:
+                self.checkbox4.setCheck(False) 
+
         if (self.GradeIn == "     Grade B"):
             self.weightInputInit.placeHolderText(gradeBSave.weightInitDurian)
             self.weightInputFinal.placeHolderText(gradeBSave.weightFinalDurian)
@@ -719,6 +757,39 @@ class settingWindow(QDialog):
             self.percentInputFinal.placeHolderText(gradeBSave.percentFinalDurian)   
             self.amountInput.placeHolderText(gradeBSave.amountDurian)        
             self.badInput.placeHolderText(gradeBSave.badDurian)   
+
+            self.selectShape.clearData()
+            self.selectShape.setItem(gradeBSave.shapeDurian)
+            self.selectShape.setItem('     Select Shape')
+            self.selectShape.setItem('     Shape A')
+            self.selectShape.setItem('     Shape B')
+            self.selectShape.setItem('     Out')
+
+            if (self.BCheckWeight == 0):
+                self.checkbox.setCheck(True)
+            else:
+                self.checkbox.setCheck(False)
+
+            if (self.BCheckPercent == 0):
+                self.checkbox1.setCheck(True)
+            else:
+                self.checkbox1.setCheck(False)
+
+            if (self.BCheckAmount == 0):
+                self.checkbox2.setCheck(True)
+            else:
+                self.checkbox2.setCheck(False)
+
+            if (self.BCheckBad == 0):
+                self.checkbox3.setCheck(True)
+            else:
+                self.checkbox3.setCheck(False) 
+
+            if (self.BCheckShape == 0):
+                self.checkbox4.setCheck(True)
+            else:
+                self.checkbox4.setCheck(False) 
+
         if (self.GradeIn == "     Grade C"):
             self.weightInputInit.placeHolderText(gradeCSave.weightInitDurian)
             self.weightInputFinal.placeHolderText(gradeCSave.weightFinalDurian)
@@ -726,6 +797,39 @@ class settingWindow(QDialog):
             self.percentInputFinal.placeHolderText(gradeCSave.percentFinalDurian)   
             self.amountInput.placeHolderText(gradeCSave.amountDurian)        
             self.badInput.placeHolderText(gradeCSave.badDurian)  
+            
+            self.selectShape.clearData()
+            self.selectShape.setItem(gradeCSave.shapeDurian)
+            self.selectShape.setItem('     Select Shape')
+            self.selectShape.setItem('     Shape A')
+            self.selectShape.setItem('     Shape B')
+            self.selectShape.setItem('     Out')
+
+            if (self.CCheckWeight == 0):
+                self.checkbox.setCheck(True)
+            else:
+                self.checkbox.setCheck(False)
+
+            if (self.CCheckPercent == 0):
+                self.checkbox1.setCheck(True)
+            else:
+                self.checkbox1.setCheck(False)
+
+            if (self.CCheckAmount == 0):
+                self.checkbox2.setCheck(True)
+            else:
+                self.checkbox2.setCheck(False)
+
+            if (self.CCheckBad == 0):
+                self.checkbox3.setCheck(True)
+            else:
+                self.checkbox3.setCheck(False) 
+
+            if (self.CCheckShape == 0):
+                self.checkbox4.setCheck(True)
+            else:
+                self.checkbox4.setCheck(False) 
+
         print(self.GradeIn)
  
 
@@ -786,65 +890,100 @@ class settingWindow(QDialog):
     def handleSelectShape(self, valueShape):
         self.ShapeIn = valueShape
         if (self.GradeIn == "     Grade A"):
-            gradeA.badDurian = self.BadIn
+            gradeA.shapeDurian = self.ShapeIn
         if (self.GradeIn == "     Grade B"):
-            gradeB.badDurian = self.BadIn
+            gradeB.shapeDurian = self.ShapeIn
         if (self.GradeIn == "     Grade C"):
-            gradeC.badDurian = self.BadIn
+            gradeC.shapeDurian = self.ShapeIn
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def CheckSelectWeight(self, state):
         if state == QtCore.Qt.Checked:
             if (self.GradeIn == "     Grade A"):
-                gradeA.weightInitDurian = 0
-                gradeA.weightFinalDurian = 0
+                self.ACheckWeight = 0
+                gradeA.weightInitDurian = '0'
+                gradeA.weightFinalDurian = '0'
                 print(gradeA.weightInitDurian)
             if (self.GradeIn == "     Grade B"):
-                gradeB.weightInitDurian = 0
-                gradeB.weightFinalDurian = 0
+                self.BCheckWeight = 0                
+                gradeB.weightInitDurian = '0'
+                gradeB.weightFinalDurian = '0'
             if (self.GradeIn == "     Grade C"):
-                gradeC.weightInitDurian = 0
-                gradeC.weightFinalDurian = 0
+                self.CCheckWeight = 0                     
+                gradeC.weightInitDurian = '0'
+                gradeC.weightFinalDurian = '0'
+        else:
+            self.ACheckWeight = 1     
+            self.BCheckWeight = 1 
+            self.CCheckWeight = 1       
 
     def CheckSelectPercent(self, state):
         if state == QtCore.Qt.Checked:
             if (self.GradeIn == "     Grade A"):
-                gradeA.percentInitDurian = 0
-                gradeA.percentFinalDurian = 0
+                self.ACheckPercent = 0                     
+                gradeA.percentInitDurian = '0'
+                gradeA.percentFinalDurian = '0'
             if (self.GradeIn == "     Grade B"):
-                gradeB.percentInitDurian = 0
-                gradeB.percentFinalDurian = 0
+                self.BCheckPercent = 0  
+                gradeB.percentInitDurian = '0'
+                gradeB.percentFinalDurian = '0'
             if (self.GradeIn == "     Grade C"):
-                gradeC.percentInitDurian = 0
-                gradeC.percentFinalDurian = 0
+                self.CCheckPercent = 0  
+                gradeC.percentInitDurian = '0'
+                gradeC.percentFinalDurian = '0'
+        else:
+            self.ACheckPercent = 1     
+            self.BCheckPercent = 1 
+            self.CCheckPercent = 1       
 
     def CheckSelectAmount(self, state):
         if state == QtCore.Qt.Checked:
             if (self.GradeIn == "     Grade A"):
-                gradeA.amountDurian = 0
+                self.ACheckAmount = 0       
+                gradeA.amountDurian = '0'
             if (self.GradeIn == "     Grade B"):
-                gradeB.amountDurian = 0
+                self.BCheckAmount = 0                 
+                gradeB.amountDurian = '0'
             if (self.GradeIn == "     Grade C"):
-                gradeC.amountDurian = 0
+                self.CCheckAmount = 0                  
+                gradeC.amountDurian = '0'
+        else:
+            self.ACheckAmount = 1     
+            self.BCheckAmount = 1 
+            self.CCheckAmount = 1   
 
     def CheckSelectBad(self, state):
         if state == QtCore.Qt.Checked:
             if (self.GradeIn == "     Grade A"):
-                gradeA.badDurian = 0
+                self.ACheckBad = 0      
+                gradeA.badDurian = '0'
             if (self.GradeIn == "     Grade B"):
-                gradeB.badDurian = 0
+                self.BCheckBad = 0    
+                gradeB.badDurian = '0'
             if (self.GradeIn == "     Grade C"):
-                gradeC.badDurian = 0
+                self.CCheckBad = 0    
+                gradeC.badDurian = '0'
+        else:
+            self.ACheckBad = 1     
+            self.BCheckBad = 1 
+            self.CCheckBad = 1  
 
     def CheckSelectShape(self, state):
         if state == QtCore.Qt.Checked:
             if (self.GradeIn == "     Grade A"):
+                self.ACheckShape = 0    
                 gradeA.shapeDurian = ''
             if (self.GradeIn == "     Grade B"):
+                self.BCheckShape = 0    
                 gradeB.shapeDurian = ''
             if (self.GradeIn == "     Grade C"):
+                self.CCheckShape = 0    
                 gradeC.shapeDurian = ''
+        else:
+            self.ACheckShape = 1     
+            self.BCheckShape = 1 
+            self.CCheckShape = 1  
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
@@ -883,11 +1022,56 @@ class settingWindow(QDialog):
             gradeCSave.percentFinalDurian   = gradeC.percentFinalDurian
             gradeCSave.amountDurian         = gradeC.amountDurian
             gradeCSave.badDurian            = gradeC.badDurian  
+            gradeCSave.shapeDurian          = gradeC.shapeDurian   
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def cancelCriteria(self):
         print("Cancel Value")
+        if (self.GradeIn == "     Grade A"):
+            self.weightInputInit.placeHolderText(gradeASave.weightInitDurian)
+            self.weightInputFinal.placeHolderText(gradeASave.weightFinalDurian)
+            self.percentInputInit.placeHolderText(gradeASave.percentInitDurian)
+            self.percentInputFinal.placeHolderText(gradeASave.percentFinalDurian)   
+            self.amountInput.placeHolderText(gradeASave.amountDurian)        
+            self.badInput.placeHolderText(gradeASave.badDurian)     
+
+            self.selectShape.clearData()
+            self.selectShape.setItem(gradeASave.shapeDurian)
+            self.selectShape.setItem('     Select Shape')
+            self.selectShape.setItem('     Shape A')
+            self.selectShape.setItem('     Shape B')
+            self.selectShape.setItem('     Out')
+
+        if (self.GradeIn == "     Grade B"):
+            self.weightInputInit.placeHolderText(gradeBSave.weightInitDurian)
+            self.weightInputFinal.placeHolderText(gradeBSave.weightFinalDurian)
+            self.percentInputInit.placeHolderText(gradeBSave.percentInitDurian)
+            self.percentInputFinal.placeHolderText(gradeBSave.percentFinalDurian)   
+            self.amountInput.placeHolderText(gradeBSave.amountDurian)        
+            self.badInput.placeHolderText(gradeBSave.badDurian)   
+
+            self.selectShape.clearData()
+            self.selectShape.setItem(gradeBSave.shapeDurian)
+            self.selectShape.setItem('     Select Shape')
+            self.selectShape.setItem('     Shape A')
+            self.selectShape.setItem('     Shape B')
+            self.selectShape.setItem('     Out')
+
+        if (self.GradeIn == "     Grade C"):
+            self.weightInputInit.placeHolderText(gradeCSave.weightInitDurian)
+            self.weightInputFinal.placeHolderText(gradeCSave.weightFinalDurian)
+            self.percentInputInit.placeHolderText(gradeCSave.percentInitDurian)
+            self.percentInputFinal.placeHolderText(gradeCSave.percentFinalDurian)   
+            self.amountInput.placeHolderText(gradeCSave.amountDurian)        
+            self.badInput.placeHolderText(gradeCSave.badDurian)  
+            
+            self.selectShape.clearData()
+            self.selectShape.setItem(gradeCSave.shapeDurian)
+            self.selectShape.setItem('     Select Shape')
+            self.selectShape.setItem('     Shape A')
+            self.selectShape.setItem('     Shape B')
+            self.selectShape.setItem('     Out')
 
     #---------------------------------------------------------------------------------------------------------------------------#
         

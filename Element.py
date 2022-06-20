@@ -156,6 +156,7 @@ class InputBox():
       self.object.textChanged.connect(goto)
 
    def placeHolderText(self, text):
+      self.object.clear()
       self.object.setPlaceholderText(text)
 
 #-------------------------------------------------------#
@@ -184,6 +185,12 @@ class dropDownList():
    def setStyle(self, style):
       self.style = style
       self.comboState.setStyleSheet(style)
+
+   def currentText(self, text):
+      self.comboState.setCurrentText(text)
+
+   def clearData(self):
+      self.comboState.clear()
    
 #-------------------------------------------------------#
 
@@ -208,6 +215,8 @@ class CheckBox():
       self.style = style
       self.check.setStyleSheet(style)
 
+   def setCheck(self, TorF):
+      self.check.setChecked(TorF)
 
 #-------------------------------------------------------#
 
