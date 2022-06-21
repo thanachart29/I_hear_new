@@ -231,3 +231,11 @@ class criteriaDurian:
       self.amountDurian = amount
       self.badDurian = bad
       self.shapeDurian = shape
+
+class criteriaCheck:
+   def __init__(self, weight, percent, amount, bad, shape):
+      self.weightDurian = weight
+      self.percentDurian = percent
+      self.amountDurian = amount
+      self.badDurian = bad
+      self.shapeDurian = shape
