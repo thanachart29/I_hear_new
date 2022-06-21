@@ -627,7 +627,7 @@ class settingWindow(QDialog):
 
         # ------------------------------------------------------------------------------------------#
 
-        style = """
+        style1 = """
             QCheckBox{
                 background-color: white;
                 border-radius: 2; 
@@ -647,25 +647,23 @@ class settingWindow(QDialog):
 
         """
 
-        #---------------------------------------------------------------------------------------------------#
-
         self.checkbox = CheckBox(self, 1050, 400, QtCore.Qt.PointingHandCursor, self.CheckSelectWeight)
-        self.checkbox.setStyle(style)
+        self.checkbox.setStyle(style1)
         self.checkbox.setSize(22,22)
         self.checkbox.setCheck(False)
 
         self.checkbox1 = CheckBox(self, 1050, 460, QtCore.Qt.PointingHandCursor, self.CheckSelectPercent)
-        self.checkbox1.setStyle(style)
+        self.checkbox1.setStyle(style1)
         self.checkbox1.setSize(22,22)
         self.checkbox1.setCheck(False)
 
         self.checkbox2 = CheckBox(self, 1050, 520, QtCore.Qt.PointingHandCursor, self.CheckSelectAmount)
-        self.checkbox2.setStyle(style)
+        self.checkbox2.setStyle(style1)
         self.checkbox2.setSize(22,22)
         self.checkbox2.setCheck(False)
 
         self.checkbox3 = CheckBox(self, 1050, 580, QtCore.Qt.PointingHandCursor, self.CheckSelectBad)
-        self.checkbox3.setStyle(style)
+        self.checkbox3.setStyle(style1)
         self.checkbox3.setSize(22,22)        
         self.checkbox3.setCheck(False)
 
@@ -709,6 +707,48 @@ class settingWindow(QDialog):
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def handleSelectGrade(self, value):
+
+        style1 = """
+            QCheckBox{
+                background-color: white;
+                border-radius: 2; 
+                border-color: rgb(43, 43, 43);
+            }
+            QCheckBox::indicator{
+                width: 22px;
+                height: 22px;
+            }
+            QCheckBox::indicator:checked{
+                background: url(icons/tick.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                border-radius: 2; 
+                border-color: rgb(43, 43, 43);
+            }
+
+        """
+
+        self.checkbox = CheckBox(self, 1050, 400, QtCore.Qt.PointingHandCursor, self.CheckSelectWeight)
+        self.checkbox.setStyle(style1)
+        self.checkbox.setSize(22,22)
+
+        self.checkbox1 = CheckBox(self, 1050, 460, QtCore.Qt.PointingHandCursor, self.CheckSelectPercent)
+        self.checkbox1.setStyle(style1)
+        self.checkbox1.setSize(22,22)
+
+        self.checkbox2 = CheckBox(self, 1050, 520, QtCore.Qt.PointingHandCursor, self.CheckSelectAmount)
+        self.checkbox2.setStyle(style1)
+        self.checkbox2.setSize(22,22)
+
+        self.checkbox3 = CheckBox(self, 1050, 580, QtCore.Qt.PointingHandCursor, self.CheckSelectBad)
+        self.checkbox3.setStyle(style1)
+        self.checkbox3.setSize(22,22)        
+
+        self.checkbox4 = CheckBox(self, 1050, 640, QtCore.Qt.PointingHandCursor, self.CheckSelectShape)
+        self.checkbox4.setStyle(style1)
+        self.checkbox4.setSize(22,22) 
+
+
         self.GradeIn = value
         if (self.GradeIn == "     Grade A"):
             self.weightInputInit.placeHolderText(gradeASave.weightInitDurian)
@@ -898,25 +938,30 @@ class settingWindow(QDialog):
 
     #---------------------------------------------------------------------------------------------------------------------------#
 
+
     def CheckSelectWeight(self, state):
-        if state == QtCore.Qt.Checked:
-            if (self.GradeIn == "     Grade A"):
+        if (self.GradeIn == "     Grade A"):
+            if (state == QtCore.Qt.Checked):
                 self.ACheckWeight = 0
                 gradeA.weightInitDurian = '0'
                 gradeA.weightFinalDurian = '0'
-                print(gradeA.weightInitDurian)
-            if (self.GradeIn == "     Grade B"):
+            else:
+                self.ACheckWeight = 1 
+        if (self.GradeIn == "     Grade B"):
+            if (state == QtCore.Qt.Checked):
                 self.BCheckWeight = 0                
                 gradeB.weightInitDurian = '0'
                 gradeB.weightFinalDurian = '0'
-            if (self.GradeIn == "     Grade C"):
+            else:
+                self.BCheckWeight = 1                
+        if (self.GradeIn == "     Grade C"):
+            if (state == QtCore.Qt.Checked):
                 self.CCheckWeight = 0                     
                 gradeC.weightInitDurian = '0'
                 gradeC.weightFinalDurian = '0'
-        else:
-            self.ACheckWeight = 1     
-            self.BCheckWeight = 1 
-            self.CCheckWeight = 1       
+            else:
+                self.CCheckWeight = 1      
+        print(gradeA.weightInitDurian) 
 
     def CheckSelectPercent(self, state):
         if state == QtCore.Qt.Checked:
