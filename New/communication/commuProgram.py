@@ -1,6 +1,7 @@
 from distutils.command.check import check
 import platform
 import serial
+import time
 import sys
 
 class Communication():
@@ -8,10 +9,12 @@ class Communication():
     def __init__(self, os):
 
         self.os = os
-        if self.os == 'D': #Mac
-            self.ser = serial.Serial('/dev/cu.usbmodem1303', 115200, parity='E', stopbits=1, timeout=1)
+        if self.os == 'M': #Mac
+            self.ser = serial.Serial('/dev/cu.usbmodem1103', 115200, parity='E', stopbits=1, timeout=1)
         elif self.os == 'W': #Windows
             self.ser = serial.Serial('COM10',115200,parity='E',stopbits=1,timeout=1)
+
+        time.sleep(2)
         
         self.ready = False
         self.camera = False
@@ -30,15 +33,17 @@ class Communication():
 
     def start(self):
 
-        self.request_mode()
-        if self.ready:
-            self.weight_mode()
+        # self.request_mode()
+        # if self.ready:
+        #     self.weight_mode()
+        self.weight_mode()
 
     def request_mode(self): # mode_1 : 177
 
         self.ser.write([177])
         self.serialWait()
         serialRead = self.ser.read(2)
+        print(serialRead)
         if ((serialRead[0] == 177) & (serialRead[1] == 0)):
             self.ready = True
         elif (serialRead[0] == 178):
@@ -126,8 +131,10 @@ class Communication():
             pass
         
 if __name__ == '__main__':
-   app = Communication(platform.platform()[0].upper())
-   sys.exit(app.exec_())
+    os = platform.platform()[0].upper()
+    print(os)
+    app = Communication(os)
+    sys.exit(app.exec_())
 
 
 

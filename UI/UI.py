@@ -156,6 +156,7 @@ class mainWindow(QDialog):
 
         # ระบบกำลังประมวลผลข้อมูล
         if (State == 1):
+
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
@@ -230,10 +231,12 @@ class mainWindow(QDialog):
             self.StateVa.setFontSize(13) 
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkYellow)) 
-
+            
+            #--------------------------------------------All Main Processes--------------------------------------------#
 
         # ระบบทำงานเสร็จสมบูรณ์ แสดงข้อมูลที่เกี่ยวข้อง
         if (State == 2):
+
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
