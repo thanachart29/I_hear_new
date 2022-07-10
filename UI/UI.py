@@ -1,6 +1,4 @@
-from http.client import BadStatusLine
 import sys
-import math
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap, QCursor
@@ -9,11 +7,11 @@ from Element import *
 
 #-----------------------------------------------------------------------------------------------------------#
 
-# State 0 : ระบบหยุดการทำงาน
-# State 1 : ระบบกำลังประมวลผล
-# State 2 : ระบบทำงานเสร็จสมบูรณ์
-State = 2
-
+# State 0 : ระบบหยุดการทำงาน          >> เริ่มการทำงานของเครื่องใหม่ กด start เข้า state 1
+# State 1 : ระบบกำลังประมวลผล         >> เครื่องกำลังทำงาน กด emer or pause เข้่า state 2
+# State 2 : ระบบหยุุดการทำงานชั่วคราว    >> ปลด emer or resume เข้า state 1
+# State 3 : ระบบทำงานเสร็จสมบูรณ์       >> เครื่องทำงานเสร็จ กด finish เข้า state 0
+process     = state('3') 
 
 # Parameter In
 WeightValue  = "15"                     # น้ำหนักของทุเรียน
@@ -24,7 +22,6 @@ PicAngle1    = 'pics/Durian1.jpg'
 PicAngle2    = 'pics/Durian2.jpg'
 
 #-----------------------------------------------------------------------------------------------------------#
-
 
 # Do not change 
 gradeA = criteriaDurian('A', '0', '0', '0', '0', '0', '0', '')
@@ -42,7 +39,6 @@ CCheck = criteriaCheck(1, 1, 1, 1, 1)
 ACheckSave = criteriaCheck(1, 1, 1, 1, 1)
 BCheckSave = criteriaCheck(1, 1, 1, 1, 1)
 CCheckSave = criteriaCheck(1, 1, 1, 1, 1)
-
 
 #-----------------------------------------------------------------------------------------------------------#
 
@@ -70,7 +66,7 @@ class mainWindow(QDialog):
         #---------------------------------------------------------------------------------------------------#
 
         # ระบบหยุดทำงานรอคำสั่งจากเครื่อง
-        if (State == 0):
+        if (process.stateProcess == '0'):
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
@@ -152,11 +148,18 @@ class mainWindow(QDialog):
             self.setting.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
             self.setting.Icon(QtGui.QIcon("icons/settings.png"))
 
-        
+            self.start = Button(self, 20, "START", 825, 745, self.runProgram, QtCore.Qt.PointingHandCursor)
+            self.start.setFontSize(12) 
+            self.start.setSize(120, 40)
+            self.start.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
 
         # ระบบกำลังประมวลผลข้อมูล
+<<<<<<< Updated upstream
         if (State == 1):
 
+=======
+        if (process.stateProcess == '1'):
+>>>>>>> Stashed changes
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
@@ -231,12 +234,113 @@ class mainWindow(QDialog):
             self.StateVa.setFontSize(13) 
             self.StateVa.setSize(300, 100)
             self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkYellow)) 
+<<<<<<< Updated upstream
             
             #--------------------------------------------All Main Processes--------------------------------------------#
 
         # ระบบทำงานเสร็จสมบูรณ์ แสดงข้อมูลที่เกี่ยวข้อง
         if (State == 2):
 
+=======
+
+            self.pause = Button(self, 20, "PAUSE", 825, 745, self.pauseProgram, QtCore.Qt.PointingHandCursor)
+            self.pause.setFontSize(12) 
+            self.pause.setSize(120, 40)
+            self.pause.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
+
+
+        #ระบบหยุดการทำงานชั่วคราว
+        if (process.stateProcess == '2'):
+            self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
+            self.PicTopic.setFontSize(18) 
+            self.PicTopic.setSize(131, 46)
+            self.PicTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
+
+            self.DetailTopic = Text(self, 0, "DETAILS", 670, 210)
+            self.DetailTopic.setFontSize(18) 
+            self.DetailTopic.setSize(131, 46)
+            self.DetailTopic.setStyle("color: {}; background-color: None; font-weight: bold;".format(self.color.blackGreen)) 
+
+            self.WeightTopic = Text(self, 0, "น้ำหนักผลทุเรียน", 610, 300)
+            self.WeightTopic.setFontSize(13) 
+            self.WeightTopic.setSize(150, 30)
+            self.WeightTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+            self.WeightTopic1 = Text(self, 0, "กิโลกรัม", 605, 500)
+            self.WeightTopic1.setFontSize(13) 
+            self.WeightTopic1.setSize(150, 30)
+            self.WeightTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            
+            self.AmountTopic = Text(self, 0, "จำนวนพู", 795, 300)
+            self.AmountTopic.setFontSize(13) 
+            self.AmountTopic.setSize(150, 30)
+            self.AmountTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+            self.AmountTopic1 = Text(self, 0, "พู", 792, 500)
+            self.AmountTopic1.setFontSize(13) 
+            self.AmountTopic1.setSize(150, 30)
+            self.AmountTopic1.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+            self.PercentTopic = Text(self, 0, "เปอร์เซ็นต์น้ำหนักแห้ง", 973, 300)
+            self.PercentTopic.setFontSize(13) 
+            self.PercentTopic.setSize(210, 30)
+            self.PercentTopic.setStyle("color: {}; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+            
+            self.PercentTopic1 = Text(self, 0, "เปอร์เซ็นต์", 990, 500)
+            self.PercentTopic1.setFontSize(13) 
+            self.PercentTopic1.setSize(150, 30)
+            self.PercentTopic1.setStyle("color: {} ; background-color: None; font-weight: light;".format(self.color.darkGreen)) 
+
+            self.GradeTopic = Text(self, 0, "เกรดทุเรียน", 635, 607)
+            self.GradeTopic.setFontSize(18) 
+            self.GradeTopic.setSize(200, 60)
+            self.GradeTopic.setStyle("color: white ; background-color: None; font-weight: Bold;") 
+
+            self.GradeTopic1 = Text(self, 0, "GRADE", 838, 612)
+            self.GradeTopic1.setFontSize(28) 
+            self.GradeTopic1.setSize(200, 50)
+            self.GradeTopic1.setStyle("color: white ; background-color: None; font-weight: Bold;")
+
+            self.WeightVa = Text(self, 0, "0", 604, 365)
+            self.WeightVa.setFontSize(40) 
+            self.WeightVa.setSize(150, 100)
+            self.WeightVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.AmountVa = Text(self, 0, "0", 793, 365)
+            self.AmountVa.setFontSize(40) 
+            self.AmountVa.setSize(150, 100)
+            self.AmountVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.PercentVa = Text(self, 0, "0", 988, 365)
+            self.PercentVa.setFontSize(40) 
+            self.PercentVa.setSize(150, 100)
+            self.PercentVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.blackGreen)) 
+
+            self.GradeVa = Text(self, 0, "-", 988, 585)
+            self.GradeVa.setFontSize(40) 
+            self.GradeVa.setSize(150, 100)
+            self.GradeVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.white)) 
+
+            self.StateVa = Text(self, 0, "ระบบหยุดการทำงานชั่วคราว", 885, 55)
+            self.StateVa.setFontSize(13) 
+            self.StateVa.setSize(300, 100)
+            self.StateVa.setStyle("color: {}; background-color: None; font-weight: Bold;".format(self.color.darkOrange)) 
+
+            self.resume = Button(self, 20, "RESUME", 825, 745, self.resumeProgram, QtCore.Qt.PointingHandCursor)
+            self.resume.setFontSize(12) 
+            self.resume.setSize(120, 40)
+            self.resume.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
+
+            self.setting = Button(self, 20, "  SETTING CRITERIA", 973, 745, self.gotoSettingWindow, QtCore.Qt.PointingHandCursor)
+            self.setting.setFontSize(12) 
+            self.setting.setSize(240, 40)
+            self.setting.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
+            self.setting.Icon(QtGui.QIcon("icons/settings.png"))
+
+
+        # ระบบทำงานเสร็จสมบูรณ์ แสดงข้อมูลที่เกี่ยวข้อง
+        if (process.stateProcess == '3'):
+>>>>>>> Stashed changes
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
@@ -343,14 +447,52 @@ class mainWindow(QDialog):
             self.setting.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
             self.setting.Icon(QtGui.QIcon("icons/settings.png"))
 
+            self.finish = Button(self, 20, "FINISH", 825, 745, self.finishProgram, QtCore.Qt.PointingHandCursor)
+            self.finish.setFontSize(12) 
+            self.finish.setSize(120, 40)
+            self.finish.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
+
     #---------------------------------------------------------------------------------------------------------------------------#
 
     def gotoSettingWindow(self):
         SettingWindow = settingWindow()
         widget.addWidget(SettingWindow)
         widget.setCurrentIndex(widget.currentIndex()+1)
+   
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def runProgram(self):
+        process.stateProcess = '1'
+        MainWindow    = mainWindow()
+        widget.addWidget(MainWindow)
+        widget.setCurrentIndex(widget.currentIndex()+1)
 
     #---------------------------------------------------------------------------------------------------------------------------#
+
+    def finishProgram(self):
+        process.stateProcess = '0'
+        MainWindow    = mainWindow()
+        widget.addWidget(MainWindow)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def pauseProgram(self):
+        process.stateProcess = '2'
+        MainWindow    = mainWindow()
+        widget.addWidget(MainWindow)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+
+    def resumeProgram(self):
+        process.stateProcess = '1'
+        MainWindow    = mainWindow()
+        widget.addWidget(MainWindow)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    #---------------------------------------------------------------------------------------------------------------------------#
+    
         
     def paintEvent(self, e):
         painter = QPainter(self)
@@ -390,10 +532,10 @@ class mainWindow(QDialog):
 
         #---------------------------------------------------------------------------------------------------#
 
-        if (State == 0):
+        if (process.stateProcess == '0'):
             painter4 = QPainter(self)
-            painter4.setPen(QPen(QColor(211, 47, 47, 25)))
-            painter4.setBrush(QBrush(QColor(211, 47, 47, 20), Qt.SolidPattern))
+            painter4.setPen(QPen(QColor(211, 47, 47, 15)))
+            painter4.setBrush(QBrush(QColor(211, 47, 47, 15), Qt.SolidPattern))
             # For status
             painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
 
@@ -401,14 +543,14 @@ class mainWindow(QDialog):
             painter5.setPen(QPen(QColor(211, 47, 47)))
             painter5.setBrush(QBrush(QColor(211, 47, 47), Qt.SolidPattern))
             # For title
-            painter5.drawEllipse(870, 91, 28, 28)
+            painter5.drawEllipse(868, 91, 28, 28)
 
         #---------------------------------------------------------------------------------------------------#
 
-        if (State == 1):
+        if (process.stateProcess == '1'):
             painter4 = QPainter(self)
-            painter4.setPen(QPen(QColor(255, 210, 85, 25)))
-            painter4.setBrush(QBrush(QColor(255, 210, 85, 20), Qt.SolidPattern))
+            painter4.setPen(QPen(QColor(255, 210, 85, 15)))
+            painter4.setBrush(QBrush(QColor(255, 210, 85, 15), Qt.SolidPattern))
             # For status
             painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
 
@@ -416,14 +558,29 @@ class mainWindow(QDialog):
             painter5.setPen(QPen(QColor(255, 210, 85)))
             painter5.setBrush(QBrush(QColor(255, 210, 85), Qt.SolidPattern))
             # For title
-            painter5.drawEllipse(870, 91, 28, 28)
+            painter5.drawEllipse(868, 91, 28, 28)
 
         #---------------------------------------------------------------------------------------------------#
 
-        if (State == 2):
+        if (process.stateProcess == '2'):
             painter4 = QPainter(self)
-            painter4.setPen(QPen(QColor(163, 195, 48, 25)))
-            painter4.setBrush(QBrush(QColor(163, 195, 48, 20), Qt.SolidPattern))
+            painter4.setPen(QPen(QColor(232, 122, 35, 15)))
+            painter4.setBrush(QBrush(QColor(232, 122, 35, 15), Qt.SolidPattern))
+            # For status
+            painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
+
+            painter5 = QPainter(self)
+            painter5.setPen(QPen(QColor(232, 122, 35)))
+            painter5.setBrush(QBrush(QColor(232, 122, 35), Qt.SolidPattern))
+            # For title
+            painter5.drawEllipse(868, 91, 28, 28)
+
+        #---------------------------------------------------------------------------------------------------#
+
+        if (process.stateProcess == '3'):
+            painter4 = QPainter(self)
+            painter4.setPen(QPen(QColor(163, 195, 48, 15)))
+            painter4.setBrush(QBrush(QColor(163, 195, 48, 15), Qt.SolidPattern))
             # For status
             painter4.drawRoundedRect(840, 74, 350, 60, 20.0, 20.0)
 
@@ -431,7 +588,7 @@ class mainWindow(QDialog):
             painter5.setPen(QPen(QColor(82, 137, 1)))
             painter5.setBrush(QBrush(QColor(82, 137, 1), Qt.SolidPattern))
             # For title
-            painter5.drawEllipse(870, 91, 28, 28)
+            painter5.drawEllipse(868, 91, 28, 28)
 
 #---------------------------------------------------------------------------------------------------------------------------# 
    
@@ -925,14 +1082,20 @@ class settingWindow(QDialog):
                 ACheck.weightDurian = 0
                 gradeA.weightInitDurian = '0'
                 gradeA.weightFinalDurian = '0'
+                self.weightInputInit.placeHolderText(gradeA.weightInitDurian)
+                self.weightInputFinal.placeHolderText(gradeA.weightFinalDurian)
             if (self.GradeIn == "     Grade B"):
                 BCheck.weightDurian = 0                
                 gradeB.weightInitDurian = '0'
                 gradeB.weightFinalDurian = '0'
+                self.weightInputInit.placeHolderText(gradeB.weightInitDurian)
+                self.weightInputFinal.placeHolderText(gradeB.weightFinalDurian)
             if (self.GradeIn == "     Grade C"):
                 CCheck.weightDurian = 0                     
                 gradeC.weightInitDurian = '0'
                 gradeC.weightFinalDurian = '0'
+                self.weightInputInit.placeHolderText(gradeC.weightInitDurian)
+                self.weightInputFinal.placeHolderText(gradeC.weightFinalDurian)
         else:
             if (self.GradeIn == "     Grade A"):
                 ACheck.weightDurian = 1     
@@ -947,14 +1110,20 @@ class settingWindow(QDialog):
                 ACheck.percentDurian = 0                     
                 gradeA.percentInitDurian = '0'
                 gradeA.percentFinalDurian = '0'
+                self.percentInputInit.placeHolderText(gradeA.percentInitDurian)
+                self.percentInputFinal.placeHolderText(gradeA.percentFinalDurian)   
             if (self.GradeIn == "     Grade B"):
                 BCheck.percentDurian = 0  
                 gradeB.percentInitDurian = '0'
                 gradeB.percentFinalDurian = '0'
+                self.percentInputInit.placeHolderText(gradeB.percentInitDurian)
+                self.percentInputFinal.placeHolderText(gradeB.percentFinalDurian) 
             if (self.GradeIn == "     Grade C"):
                 CCheck.percentDurian = 0  
                 gradeC.percentInitDurian = '0'
                 gradeC.percentFinalDurian = '0'
+                self.percentInputInit.placeHolderText(gradeC.percentInitDurian)
+                self.percentInputFinal.placeHolderText(gradeC.percentFinalDurian) 
         else:
             if (self.GradeIn == "     Grade A"):
                 ACheck.percentDurian = 1     
@@ -968,12 +1137,15 @@ class settingWindow(QDialog):
             if (self.GradeIn == "     Grade A"):
                 ACheck.amountDurian = 0       
                 gradeA.amountDurian = '0'
+                self.amountInput.placeHolderText(gradeA.amountDurian) 
             if (self.GradeIn == "     Grade B"):
                 BCheck.amountDurian = 0                 
                 gradeB.amountDurian = '0'
+                self.amountInput.placeHolderText(gradeB.amountDurian) 
             if (self.GradeIn == "     Grade C"):
                 CCheck.amountDurian = 0                  
                 gradeC.amountDurian = '0'
+                self.amountInput.placeHolderText(gradeC.amountDurian) 
         else:
             if (self.GradeIn == "     Grade A"):
                 ACheck.amountDurian = 1     
@@ -987,12 +1159,15 @@ class settingWindow(QDialog):
             if (self.GradeIn == "     Grade A"):
                 ACheck.badDurian = 0      
                 gradeA.badDurian = '0'
+                self.badInput.placeHolderText(gradeA.badDurian)   
             if (self.GradeIn == "     Grade B"):
                 BCheck.badDurian = 0    
                 gradeB.badDurian = '0'
+                self.badInput.placeHolderText(gradeB.badDurian)   
             if (self.GradeIn == "     Grade C"):
                 CCheck.badDurian = 0    
                 gradeC.badDurian = '0'
+                self.badInput.placeHolderText(gradeC.badDurian)   
         else:
             if (self.GradeIn == "     Grade A"): 
                 ACheck.badDurian = 1     
@@ -1006,12 +1181,18 @@ class settingWindow(QDialog):
             if (self.GradeIn == "     Grade A"):
                 ACheck.shapeDurian = 0    
                 gradeA.shapeDurian = ''
+                self.selectShape.clearData()
+                self.selectShape.setItem(gradeA.shapeDurian)
             if (self.GradeIn == "     Grade B"):
                 BCheck.shapeDurian = 0    
                 gradeB.shapeDurian = ''
+                self.selectShape.clearData()
+                self.selectShape.setItem(gradeB.shapeDurian)
             if (self.GradeIn == "     Grade C"):
                 CCheck.shapeDurian = 0    
                 gradeC.shapeDurian = ''
+                self.selectShape.clearData()
+                self.selectShape.setItem(gradeB.shapeDurian)
         else:
             if (self.GradeIn == "     Grade A"): 
                 ACheck.shapeDurian = 1     

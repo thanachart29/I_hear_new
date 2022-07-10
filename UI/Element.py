@@ -1,5 +1,3 @@
-import math
-from pickle import TRUE
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -10,14 +8,16 @@ class Color():
       self.lightGray  = "rgb(242, 242, 242)" 
       self.gray       = "rgb(172, 172, 172)" 
       self.darkGray   = "rgb(43, 43, 43)" 
-      self.yellow     = "rgb(255, 210, 85)" 
-      self.darkYellow = "rgb(97, 88, 0)"
+      self.yellow     = "rgb(300, 210, 85)" 
+      self.darkYellow = "rgb(100, 88, 0)"
+      self.orange     = "rgb(232, 122, 35)" 
+      self.darkOrange = "rgb(190, 88, 60)"
       self.lightGreen = "rgb(163, 195, 48)"
       self.green      = "rgb(82, 137, 1)" 
       self.darkGreen  = "rgb(56, 70, 9)" 
       self.blackGreen = "rgb(24, 33, 20)" 
-      self.red        = "rgb(211, 47, 47)" 
-      self.darkRed    = "rgb(65, 0, 0)" 
+      self.red        = "rgb(220, 50, 50)" 
+      self.darkRed    = "rgb(50, 0, 0)" 
 
 
 #-------------------------------------------------------#
@@ -239,3 +239,7 @@ class criteriaCheck:
       self.amountDurian = amount
       self.badDurian = bad
       self.shapeDurian = shape
+
+class state:
+   def __init__(self, State):
+      self.stateProcess = State
