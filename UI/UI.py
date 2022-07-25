@@ -154,12 +154,7 @@ class mainWindow(QDialog):
             self.start.setStyle("color:{}; background-color: {}; border-radius: 10; font-weight: Bold;".format(self.color.darkGray, self.color.lightGray))
 
         # ระบบกำลังประมวลผลข้อมูล
-<<<<<<< Updated upstream
-        if (State == 1):
-
-=======
         if (process.stateProcess == '1'):
->>>>>>> Stashed changes
             self.PicTopic = Text(self, 0, "PICTURE", 160, 210)
             self.PicTopic.setFontSize(18) 
             self.PicTopic.setSize(131, 46)
