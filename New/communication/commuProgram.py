@@ -53,7 +53,7 @@ class Communication():
         camera = cv2.VideoCapture(0)
         self.frame_list.append([])
         for i in range(4):
-            self.fram_list.append([[], [], []])
+            self.frame_list.append([[], [], []])
             buffer = [178, 175]
             buffer.append(self.checkSum(buffer))
             self.ser.write(buffer)
