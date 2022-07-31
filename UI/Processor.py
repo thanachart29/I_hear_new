@@ -1,31 +1,60 @@
 import threading
 import queue
+import time
 
 class Main:
 
     def __init__(self):
+        self.pu = ''
+        self.shape = ''
+        self.defect = ''
+        self.hardness = ''
 
-        que_Pu = queue.Queue()
-        que_Shape = queue.Queue()
-        que_Defect = queue.Queue()
-        que_Hardness = queue.Queue()
+        self.test1 = ['_123']
+        self.test2 = ['_321']
+        self.test3 = ['_313']
+        self.test4 = ['_424']
 
-        thread_Pu = threading.Thread(target = lambda q, arg : que_Pu.put(self.puCounter(arg)), args = (que_Pu, []))
-        thread_Shape = threading.Thread(target = lambda q, arg : que_Shape.put(self.shapeDetector(arg)), args = (que_Shape, []))
-        thread_Defect = threading.Thread(target = lambda q, arg : que_Defect.put(self.defectDetector(arg)), args = (que_Defect, []))
-        thread_Hardness = threading.Thread(target = lambda q, arg : que_Hardness.put(self.hardnessChecker(arg)), args = (que_Hardness, []))
+        self.thread_Pu = threading.Thread(target = self.puCounter, args=self.test1)
+        self.thread_Shape = threading.Thread(target = self.shapeDetector, args=self.test2)
+        self.thread_Defect = threading.Thread(target = self.defectDetector, args=self.test3)
+        self.thread_Hardness = threading.Thread(target = self.hardnessChecker, args=self.test4)
+
+    def run(self):
+        test = time.time()
+        self.thread_Pu.start()
+        self.thread_Shape.start()
+        self.thread_Defect.start()
+        self.thread_Hardness.start()
+
+        self.thread_Pu.join()
+        self.thread_Shape.join()
+        self.thread_Defect.join()
+        self.thread_Hardness.join()
+        print('runtime : ' + str(time.time() - test) + ' sec.')
+        print('Pu : ' + self.pu)
+        print('Shape : ' + self.shape)
+        print('Defect : ' + self.defect)
+        print('Hardness : ' + self.hardness)
 
     def setData(self):
         pass
 
-    def puCounter(self):
+    def getData(self):
         pass
 
-    def shapeDetector(self):
-        pass
+    def puCounter(self, a):
+        time.sleep(4)
+        self.pu = 'Pu' + str(a)
 
-    def defectDetector(self):
-        pass
+    def shapeDetector(self, b):
+        time.sleep(3)
+        self.shape = 'Shape' + str(b)
 
-    def hardnessChecker(self):
-        pass
+    def defectDetector(self, c):
+        time.sleep(2)
+        self.defect = 'Defect' + str(c)
+
+    def hardnessChecker(self, d):
+        time.sleep(1)
+        self.hardness = 'Hardness' + str(d)
