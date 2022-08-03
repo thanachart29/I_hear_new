@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Val</folder>
+	<filename>WIN_20220714_18_43_26_Pro.jpg</filename>
+	<path>C:\Users\thana\Desktop\TheShit\DurianSang\Mobnet\Val\WIN_20220714_18_43_26_Pro.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>320</width>
+		<height>320</height>
+		<depth>1</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>base</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>123</xmin>
+			<ymin>198</ymin>
+			<xmax>163</xmax>
+			<ymax>228</ymax>
+		</bndbox>
+	</object>
+</annotation>
