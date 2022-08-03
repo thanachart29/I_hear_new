@@ -1,8 +1,0 @@
-item { 
-	name:'base'
-	id:1
-}
-item { 
-	name:'end'
-	id:2
-}
