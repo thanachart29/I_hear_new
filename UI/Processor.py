@@ -1,26 +1,38 @@
+from scipy.signal import find_peaks
+from scipy.signal import lfilter
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import numpy as np
 import threading
-import queue
 import time
+import cv2
+import os
 
 class Main:
 
     def __init__(self):
-        self.pu = ''
+
+        self.model_name = tf.keras.models.load_model('RemoveBackgroundVer9.h5')
+
+        self.puAmount = ''
         self.shape = ''
-        self.defect = ''
-        self.hardness = ''
+        self.percentDefect = ''
+        self.hardnessType = ''
 
-        self.test1 = ['_123']
-        self.test2 = ['_321']
-        self.test3 = ['_313']
-        self.test4 = ['_424']
+        self.clip = 0
+        self.top_image = 0
+        self.rear_image = 0
+        self.bottom_image = 0
+        self.magnitude_force = 0
+        self.magnitude_sound = 0
 
-        self.thread_Pu = threading.Thread(target = self.puCounter, args=self.test1)
-        self.thread_Shape = threading.Thread(target = self.shapeDetector, args=self.test2)
-        self.thread_Defect = threading.Thread(target = self.defectDetector, args=self.test3)
-        self.thread_Hardness = threading.Thread(target = self.hardnessChecker, args=self.test4)
+        self.thread_Pu = threading.Thread(target = self.puCounter)
+        self.thread_Shape = threading.Thread(target = self.shapeDetector)
+        self.thread_Defect = threading.Thread(target = self.defectDetector)
+        self.thread_Hardness = threading.Thread(target = self.hardnessChecker)
 
     def run(self):
+
         test = time.time()
         self.thread_Pu.start()
         self.thread_Shape.start()
@@ -32,29 +44,36 @@ class Main:
         self.thread_Defect.join()
         self.thread_Hardness.join()
         print('runtime : ' + str(time.time() - test) + ' sec.')
-        print('Pu : ' + self.pu)
-        print('Shape : ' + self.shape)
-        print('Defect : ' + self.defect)
-        print('Hardness : ' + self.hardness)
 
-    def setData(self):
-        pass
+    def setData(self, clip, rear_img, top_image,  bottom_image, force, sound):
 
-    def getData(self):
-        pass
+        self.clip = clip
+        self.top_image = top_image
+        self.rear_image = rear_img
+        self.bottom_img = bottom_image
+        self.magnitude_force = force
+        self.magnitude_sound = sound
 
-    def puCounter(self, a):
+    def returnValue(self):
+
+        return [self.puAmount, self.shape, self.percentDefect, self.hardnessType]
+
+    def puCounter(self):
+
         time.sleep(4)
-        self.pu = 'Pu' + str(a)
+        self.puAmount = 'Pu'
 
-    def shapeDetector(self, b):
+    def shapeDetector(self):
+
         time.sleep(3)
-        self.shape = 'Shape' + str(b)
+        self.shape = 'Shape'
 
-    def defectDetector(self, c):
+    def defectDetector(self):
+
         time.sleep(2)
-        self.defect = 'Defect' + str(c)
+        self.percentDefect = 'Defect'
 
-    def hardnessChecker(self, d):
+    def hardnessChecker(self):
+
         time.sleep(1)
-        self.hardness = 'Hardness' + str(d)
+        self.hardnessType = 'Hardness'
