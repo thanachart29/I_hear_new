@@ -30,7 +30,7 @@ while True:
         ret1, frame1 = cam[i].read()
         if (ret1):
             cv2.imshow('Cam' + str(i+1), frame1)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
         break
 
 for i in range(count):

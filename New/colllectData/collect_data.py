@@ -7,10 +7,19 @@ import os
 raw_folder_path = 'rawData4'
 frame_list = []
 count = 0
-top_camera = 0
-side_camera = 1
-bottom_camera1 = 2
-bottom_camera2 = 3
+top_camera = cv2.VideoCapture(0)
+while not(top_camera.isOpened()):
+    pass
+side_camera = cv2.VideoCapture(1)
+while not(side_camera.isOpened()):
+    pass
+bottom_camera1 = cv2.VideoCapture(2)
+while not(bottom_camera1.isOpened()):
+    pass
+bottom_camera2 = cv2.VideoCapture(3)
+while not(bottom_camera2.isOpened()):
+    pass
+print('All CAM Ready!!')
 
 def serialWait(self):
     while(ser.in_waiting == 0):
@@ -36,44 +45,24 @@ for j in range(4):
         serialRead = bytearray(ser.read(2))
         if (serialRead[0] == 178):
             if (serialRead[1] == 168):
-                camera = cv2.VideoCapture(top_camera)
-                while not(camera.isOpened()):
-                    pass
-                time.sleep(1)
-                ret, frame = camera.read()
+                ret, frame = top_camera.read()
                 if(ret == True):
                     cv2.imwrite(raw_folder_path + '/bottom/bottom_' + str(('0'*(4-len(count))) + str(count)) + '.jpg')
                     print('!!Bottom_Image saved!!')
-                    camera.release()
             elif (serialRead[1] == 170):
-                camera = cv2.VideoCapture(side_camera)
-                while not(camera.isOpened()):
-                    pass
-                time.sleep(1)
-                ret, frame = camera.read()
+                ret, frame = side_camera.read()
                 if(ret == True):
                     cv2.imwrite(raw_folder_path + '/side/side_' + str(('0'*(4-len(count))) + str(count)) + '.jpg')
                     print('!!Side_Image saved!!')
-                    camera.release()
             elif (serialRead[1] == 172):
-                camera = cv2.VideoCapture(bottom_camera1)
-                while not(camera.isOpened()):
-                    pass
-                time.sleep(1)
-                ret, frame = camera.read()
+                ret, frame = bottom_camera1.read()
                 if(ret == True):
                     cv2.imwrite(raw_folder_path + '/stick/frame1/stick_' + str(('0'*(4-len(count))) + str(count)) + '.jpg')
                     print('!!Stick_Image_frame1 saved!!')
-                    camera.release()
-                camera = cv2.VideoCapture(bottom_camera2)
-                while not(camera.isOpened()):
-                    pass
-                time.sleep(1)
-                ret, frame = camera.read()
+                ret, frame = bottom_camera2.read()
                 if(ret == True):
                     cv2.imwrite(raw_folder_path + '/stick/frame2/stick_' + str(('0'*(4-len(count))) + str(count)) + '.jpg')
                     print('!!Stick_Image_frame2 saved!!')
-                    camera.release()
 
 buffer = [178, 169]
 ser.write(buffer)
@@ -81,14 +70,14 @@ serialWait()
 serialRead = bytearray(ser.read(2))
 if (serialRead[0] == 178):
     if (serialRead[1] == 170):
-        camera = cv2.VideoCapture(side_camera)
-        while not(camera.isOpened()):
-            pass
-        time.sleep(1)
         startTime = time.time()*1000
         while((time.time()*1000 - startTime) < 10150):
             count += 1
-            ret, frame = camera.read()
+            ret, frame = side_camera.read()
             if(ret == True):
                 cv2.imwrite(raw_folder_path + '/clip/clip' + str(len(os.listdir(raw_folder_path + '/clip'))+1) + '/img_' + str(('0'*(4-len(count))) + str(count)) + '.jpg')
-        camera.release()
+                print('!!Frame[' + str(count) + '] saved!!')
+side_camera.release()
+top_camera.release()
+bottom_camera1.release()
+bottom_camera2.release()
