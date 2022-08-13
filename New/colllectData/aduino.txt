@@ -1,0 +1,154 @@
+int incomingByte = 0; // for incoming serial data
+int n = 0;
+int buff = 0;
+long int go_step = 0;
+long int check_step = 0;
+void setup() {
+  Serial.begin(9600); // opens serial port, sets data rate to 9600 bps
+  pinMode(39, OUTPUT);
+  pinMode(40, OUTPUT);
+  pinMode(41, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  // send data only when you receive data:
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    incomingByte = Serial.read();
+
+    // say what you got:
+
+    Serial.println(incomingByte, DEC);
+    if (incomingByte == 32)
+    {
+      for (long int i = 0; i <= 47000; i++) {
+
+        digitalWrite(13, 0);
+
+        digitalWrite(12, HIGH);
+        delayMicroseconds(100);
+        digitalWrite(12, LOW);
+        delayMicroseconds(100);
+      }
+      delay(500);
+      for (long int i = 0; i <= 47000; i++) {
+
+        digitalWrite(13, 1);
+
+        digitalWrite(12, HIGH);
+        delayMicroseconds(100);
+        digitalWrite(12, LOW);
+        delayMicroseconds(100);
+      }
+      delay(500);
+      buff = 1;
+      Serial.write(31)
+    }
+
+    else if (incomingByte == 102)//f
+    { if (go_step >= 4) {
+        for (long int i = 0; i <= 47000; i++) {
+
+          digitalWrite(13, 1);
+
+          digitalWrite(12, HIGH);
+          delayMicroseconds(100);
+          digitalWrite(12, LOW);
+          delayMicroseconds(100);
+        }
+        go_step = 0;
+      }
+      else {
+        for (long int i = 0; i <= 47000; i++) {
+
+          digitalWrite(13, 0);
+
+          digitalWrite(12, HIGH);
+          delayMicroseconds(100);
+          digitalWrite(12, LOW);
+          delayMicroseconds(100);
+        }
+        go_step = 4;
+        buff = 1;
+      }
+      Serial.write(101)
+    }
+    else if (incomingByte == 104)//h
+    { if (go_step >= 4) {
+        /*reset*/
+        for (long int i = 0; i <= 47000; i++) {
+
+          digitalWrite(13, 1);
+
+          digitalWrite(12, HIGH);
+          delayMicroseconds(100);
+          digitalWrite(12, LOW);
+          delayMicroseconds(100);
+        }
+        go_step = 0;
+      }
+      else { /*normal*/
+        for (long int i = 0; i <= 11750; i++) {
+
+          digitalWrite(13, 0);
+
+          digitalWrite(12, HIGH);
+          delayMicroseconds(100);
+          digitalWrite(12, LOW);
+          delayMicroseconds(100);
+        }
+        go_step += 1;
+        buff = 1;
+      }
+      Serial.write(103)
+    }
+    else if (incomingByte == 114)//r (reset step)
+    {
+      for (long int i = 0; i <= 11750 * go_step; i++) {
+
+        digitalWrite(13, 1);
+
+        digitalWrite(12, HIGH);
+        delayMicroseconds(100);
+        digitalWrite(12, LOW);
+        delayMicroseconds(100);
+      }
+      check_step = 11750 * go_step;
+      Serial.println(check_step);
+      go_step = 0;
+      buff = 1;
+      Serial.write(113)
+    }
+    else if /*sw_LED*/ (incomingByte == 10) {
+      if (buff == 0) {
+        if (n == 0) {
+          n = 1;
+          digitalWrite(39, 1);
+          digitalWrite(40, 0);
+          digitalWrite(41, 0);
+
+        }
+        else if (n == 1) {
+          n = 2;
+          digitalWrite(39, 0);
+          digitalWrite(40, 1);
+          digitalWrite(41, 0);
+        }
+        else if (n == 2) {
+          n = 0;
+          digitalWrite(39, 0);
+          digitalWrite(40, 0);
+          digitalWrite(41, 1);
+        }
+
+      }
+      else {
+        buff = 0;
+      }
+      Serial.write(9)
+    }
+    Serial.println(go_step);
+  }
+}
