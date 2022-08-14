@@ -86,17 +86,20 @@ buffer = [12] #SIDE LED
 ser.write(buffer)
 side_camera = cv2.VideoCapture(0)
 time.sleep(1)
+count = len(os.listdir(raw_folder_path + '/clip'))
+path = raw_folder_path + '/clip/clip' + str('0'*(4-len(str(count)))) + str(count)
+count = 1
 buffer = [104]
 ser.write(buffer)
-count = 1
 startTime = time.time()*1000
-path = raw_folder_path + '/clip/clip' + str(len(os.listdir(raw_folder_path + '/clip'))+1)
 print(path)
 os.mkdir(path)
-while((time.time()*1000 - startTime) < 10150):
+while((time.time()*1000 - startTime) < 7150):
+    start = time.time()
     ret, frame = side_camera.read()
     if(ret == True):
         cv2.imwrite((path + '/img_' + str(('0'*(4-len(str(count)))) + str(count)) + '.jpg'), frame)
         print('!!Frame[' + str(count) + '] saved!!')
     count += 1
+    print('Runtime : ' + str(start - time.time()) + ' sec.')
 side_camera.release()
