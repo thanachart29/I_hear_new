@@ -1,6 +1,9 @@
+from New.MainProgram.model.Mask_RCNN.mrcnn.config import Config
+from New.MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
+from New.MainProgram.model.Mask_RCNN.mrcnn.defect import DefectConfig, InferenceConfig
+
 import tensorflow as tf
 import numpy as np
-import keras
 import cv2
 import os
 
@@ -8,14 +11,24 @@ class Master:
 
     def __init__(self):
         # Storage Part
-        self.main_storage_path = 'storage'
-        self.clip_storage_path = self.main_storage_path + 'clip'
-        self.side_storage_path = self.main_storage_path + 'side'
-        self.bottom_storage_path = self.main_storage_path + 'bottom'
-        self.stick_storage_path = self.main_storage_path + 'stick'
+        self.main_storage_path = 'New/MainProgram/storage'
+        self.clip_storage_path = self.main_storage_path + '/clip'
+        self.side_storage_path = self.main_storage_path + '/side'
+        self.bottom_storage_path = self.main_storage_path + '/bottom'
+        self.stick_storage_path = self.main_storage_path + '/stick'
 
         # Model Part
-        self.sideRemoveModel = tf.keras.models.load_model('model/RemoveBackgroundVer9.h5')
+        self.main_model_path = 'New/MainProgram/model/'
+        self.sideRemoveModel = tf.keras.models.load_model(self.main_model_path + 'RemoveBackgroundVer10.h5')
+        self.sideRemoveModel = tf.keras.models.load_model(self.main_model_path + 'RemoveBackgroundVer10.h5')
+
+        inference_config = InferenceConfig()
+        model_detect_df = modellib.MaskRCNN(mode="inference", config=inference_config, model_dir=model_detect_df_folder)
+        model_detect_df.load_weights(os.path.join(model_detect_df_folder, model_detect_df_name), by_name=True)
+
+    def test(self):
+
+        print(self.clip_storage_path)
 
     def imgPreProcess(self, image, size, color):
         if color:
@@ -33,7 +46,6 @@ class Master:
         radiusDurian = []
         frameList = os.listdir(self.clip_storage_path)
         frameAmount = len(frameList)
-        degPerFrame = 360/frameAmount
         for frame_name in frameList:
             frame_loc = self.clip_storage_path + '/' + frame_name
             side_frame = cv2.imread(frame_loc)
@@ -60,7 +72,6 @@ class Master:
                 radiusDurian.append(maxR - maxL)
 
         y_axis = radiusDurian
-        x_axis = (list(range(1,len(radiusDurian)+1)))
         reNoise = []
         for i in range(len(y_axis)):
             if i < 5:
@@ -124,3 +135,6 @@ class Master:
                 puTypeList.insert('Incorrect_Pu', 0)
             else:
                 puTypeList.insert('Incomplete_Pu', 0)
+
+Test = Master()
+Test.test()

@@ -102,4 +102,11 @@ while((time.time()*1000 - startTime) < 7150):
         print('!!Frame[' + str(count) + '] saved!!')
     count += 1
     print('Runtime : ' + str(start - time.time()) + ' sec.')
-side_camera.release()
+side_camera.release()  
+
+
+
+
+
+
+     
