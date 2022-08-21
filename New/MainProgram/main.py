@@ -5,5 +5,17 @@ class Main:
 
     def __init__(self):
 
-        main_processor = Master()
-        main_communicator = Communicator()
+        self.main_processor = Master()
+        self.main_communicator = Communicator()
+
+    def getDurianData(self):
+
+        for i in range(4):
+            if self.main_communicator.communicateToDriver():
+                if self.main_communicator.communicateToLED("TOP"):
+                    self.main_communicator.imgCapture("TOP")
+                if self.main_communicator.communicateToLED("SIDE"):
+                    self.main_communicator.imgCapture("SIDE")
+                if self.main_communicator.communicateToLED("BOTTOM"):
+                    self.main_communicator.imgCapture("BOTTOM")
+            

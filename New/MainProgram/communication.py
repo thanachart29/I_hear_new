@@ -6,7 +6,6 @@ import cv2
 class Communicator:
 
     def __init__(self):
-
         # Connection Part
         main_OS = platform.platform()[0].upper()
         if main_OS == 'M': #Mac
@@ -37,6 +36,7 @@ class Communicator:
         self.sound_magnitude = [] # Magnitude of sound in 0 - 500 Hz
         self.force_magnitude = [] # Magnitude of force in 0 - 3 mm
         self.press_distance = [] # Distance of Gripper press in Durian stick
+        self.current_theta = 0 # current angle of Durian Base
 
     def serialWait(self):
         while (self.main_connection.in_waiting == 0):
@@ -102,13 +102,10 @@ class Communicator:
                 cv2.imwrite(self.clip_storage_path + '/' + count + '.jpg', frame)
         camera.release()
 
-    def communicateToDriver(self):
-        pass
-
     def communicateToLED(self, ledState):
         if ledState == "TOP":
             self.communication_Tx_buffer = [178, 169]
-            self.communication_Tx_buffer.append(self.checkSum(self.communication_buffer))
+            self.communication_Tx_buffer.append(self.checkSum(self.communication_Tx_buffer))
             self.main_connection.write(self.communication_Tx_buffer)
             self.serialWait()
             for i in range(3):   
@@ -121,7 +118,7 @@ class Communicator:
                 return False
         elif ledState == "SIDE":
             self.communication_Tx_buffer = [178, 167]
-            self.communication_Tx_buffer.append(self.checkSum(self.communication_buffer))
+            self.communication_Tx_buffer.append(self.checkSum(self.communication_Tx_buffer))
             self.main_connection.write(self.communication_Tx_buffer)
             self.serialWait()
             for i in range(3):   
@@ -134,7 +131,7 @@ class Communicator:
                 return False
         elif ledState == "BOTTOM":
             self.communication_Tx_buffer = [178, 165]
-            self.communication_Tx_buffer.append(self.checkSum(self.communication_buffer))
+            self.communication_Tx_buffer.append(self.checkSum(self.communication_Tx_buffer))
             self.main_connection.write(self.communication_Tx_buffer)
             self.serialWait()
             for i in range(3):   
@@ -146,3 +143,15 @@ class Communicator:
                 print('Failed to open Bottom LED.')
                 return False
           
+    def communicateToDriver(self):
+        self.communication_Tx_buffer = [178, 175]
+        self.communication_Tx_buffer.append(self.checkSum(self.communication_Tx_buffer))
+        self.main_connection.write(self.communication_Tx_buffer)
+        for i in range(3):   
+            self.communication_Rx_buffer.append(self.main_connection.read(1))
+        if self.communication_Rx_buffer[-1] == self.checkSum(self.communication_Rx_buffer[0:2]):
+            return True
+        else:
+            return False
+
+
