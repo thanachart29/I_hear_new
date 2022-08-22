@@ -20,11 +20,12 @@ class Master:
         # Model Part
         self.main_model_path = 'New/MainProgram/model/'
         self.sideRemoveModel = tf.keras.models.load_model(self.main_model_path + 'RemoveBackgroundVer10.h5')
-        self.sideRemoveModel = tf.keras.models.load_model(self.main_model_path + 'RemoveBackgroundVer10.h5')
 
         inference_config = InferenceConfig()
-        model_detect_df = modellib.MaskRCNN(mode="inference", config=inference_config, model_dir=model_detect_df_folder)
-        model_detect_df.load_weights(os.path.join(model_detect_df_folder, model_detect_df_name), by_name=True)
+        model_detect_df_folder = self.main_model_path + 'Mask_RCNN/logs/defect20220821T1729'
+        model_detect_df_name = 'mask_rcnn_defect_00010.h5'
+        self.model_detect_df = modellib.MaskRCNN(mode="inference", config=inference_config, model_dir=model_detect_df_folder)
+        self.model_detect_df.load_weights(os.path.join(model_detect_df_folder, model_detect_df_name), by_name=True)
 
     def test(self):
 
