@@ -27,9 +27,6 @@ class Master:
         self.model_detect_df = modellib.MaskRCNN(mode="inference", config=inference_config, model_dir=model_detect_df_folder)
         self.model_detect_df.load_weights(os.path.join(model_detect_df_folder, model_detect_df_name), by_name=True)
 
-    def test(self):
-
-        print(self.clip_storage_path)
 
     def imgPreProcess(self, image, size, color):
         if color:
@@ -40,6 +37,36 @@ class Master:
             res_image = cv2.resize(image, size)
             res_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             return res_image
+
+    def find_defect(self):
+        #Remove Background
+        image_x = 256 #h
+        image_y = 144 #w
+        img_name = os.listdir(self.side_storage_path)[0]
+        img = cv2.imread(self + '/' + img_name)
+        img_resize = (self.imgPreProcess(img, (image_x, image_y), True))/255
+        k = self.sideRemoveModel.predict(np.array([img_resize]))
+        k = k.reshape(image_y,image_x)
+        _,k = cv2.threshold(k,0.3,1.0,cv2.THRESH_BINARY)
+
+        durain_area = cv2.resize(k, (img.shape[1],img.shape[0]))
+        durian_pixel = (durain_area > 0.3).sum()                  #count pixels which are durain
+
+        k = cv2.resize(k,(img.shape[1],img.shape[0])).reshape(img.shape[0],img.shape[1],1)
+        img_removed = np.multiply(img / 255.,np.repeat(k,3,axis = 2))
+        img_removed_scale = img_removed * 255
+
+        #Detect Background
+        class_name = ['BG', 'defect']
+        results = self.model_detect_df.detect([img_removed_scale], verbose=0)
+        r = results[0]
+        mask = r['masks']                                          #got mask of defect -> shape (1080,1920,x)
+        mask = (np.sum(mask, -1, keepdims=True) >= 1)              #combine all mask
+        defect_pixel = (mask == True).sum()                        #count pixels which are defect
+
+        #Percentage
+        self.defect_percent = (defect_pixel/durian_pixel)*100
+
 
     def puCountingFunction(self):
         maxR = 0
@@ -136,6 +163,3 @@ class Master:
                 puTypeList.insert('Incorrect_Pu', 0)
             else:
                 puTypeList.insert('Incomplete_Pu', 0)
-
-Test = Master()
-Test.test()
