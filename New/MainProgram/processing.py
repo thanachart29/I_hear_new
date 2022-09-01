@@ -1,6 +1,6 @@
-from New.MainProgram.model.Mask_RCNN.mrcnn.config import Config
-from New.MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
-from New.MainProgram.model.Mask_RCNN.mrcnn.defect import DefectConfig, InferenceConfig
+from MainProgram.model.Mask_RCNN.mrcnn.config import Config
+from MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
+from MainProgram.model.Mask_RCNN.mrcnn.defect import DefectConfig, InferenceConfig
 
 import tensorflow as tf
 import numpy as np

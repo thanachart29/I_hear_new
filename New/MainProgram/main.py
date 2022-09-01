@@ -6,6 +6,9 @@ class Main:
     def __init__(self):
 
         self.main_processor = Master()
+
+    def openConnection(self):
+        
         self.main_communicator = Communicator()
 
     def getDurianData(self):
