@@ -14,40 +14,43 @@ os.chdir('/content/drive/Shareddrives/Durian Project/Programming/Jearn/Colab/Mas
 '''
 
 #Need to Import
-'''
+
 import os 
 import cv2
 import numpy as np
 import tensorflow as tf
-import keras
-'''
+
+print(os.getcwd())
+
 # !!! CHANGE to folder of library to import function in library
-'''
-os.chdir('/content/drive/Shareddrives/Durian Project/Programming/Jearn/Colab/MaskRCNN_Ver5/Mask_RCNN')
-from mrcnn.config import Config
-from mrcnn import model as modellib, utils
-from mrcnn.defect import DefectConfig, InferenceConfig
-'''
+
+# os.chdir('/content/drive/Shareddrives/Durian Project/Programming/Jearn/Colab/MaskRCNN_Ver5/Mask_RCNN')
+from MainProgram.model.Mask_RCNN.mrcnn.config import Config
+from MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
+from MainProgram.model.Mask_RCNN.mrcnn import defect 
+
 
 #Set Path to Model
 # !!! CHANGE path to created model
-'''
-model_remove_bg_path = '/content/drive/Shareddrives/Durian Project/Programming/Jearn/model/RemoveBackgroundVer10.h5'                            #path to remove background model file
-model_detect_df_folder = "/content/drive/Shareddrives/Durian Project/Programming/Jearn/Colab/MaskRCNN_Ver5/Mask_RCNN/logs/defect20220821T1729"  #just path to folder which has detect model inside
-model_detect_df_name = 'mask_rcnn_defect_00010.h5'                                                                                              #name of detect model
-'''
+
+model_remove_bg_path = 'MainProgram/model/RemoveBackgroundVer10.h5'                            #path to remove background model file
+model_detect_df_folder = "MainProgram/model/Mask_RCNN/logs/defect20220821T1729"  #just path to folder which has detect model inside
+model_detect_df_name = 'mask_rcnn_defect_0010.h5'                                                                                              #name of detect model
+model_detect_df_path = "MainProgram/model/Mask_RCNN/logs/defect20220821T1729/mask_rcnn_defect_0010.h5"
+
+print(os.listdir(model_detect_df_folder))
 
 #Load Model
 #-> for remove background
-'''
+
 model_remove_bg = tf.keras.models.load_model(model_remove_bg_path)
-'''
+
 #-> for detect defect
-'''
+
 inference_config = defect.InferenceConfig()
 model_detect_df = modellib.MaskRCNN(mode="inference", config=inference_config, model_dir=model_detect_df_folder)
 model_detect_df.load_weights(os.path.join(model_detect_df_folder, model_detect_df_name), by_name=True)
-'''
+
 #FUNCTION
 def find_defect(img, model_remove_bg):
   #Remove Background
@@ -88,3 +91,7 @@ img = cv2.imread(img_test_path)
 x = find_defect(img, model_remove_bg)
 print('defect : {}%'.format(x))
 '''
+
+img = cv2.imread('communication/rawdata3/side/side_0011.jpg')
+x = find_defect(img, model_remove_bg)
+print('defect : {}%'.format(x))
