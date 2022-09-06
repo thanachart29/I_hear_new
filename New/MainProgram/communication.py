@@ -9,7 +9,7 @@ class Communicator:
         # Connection Part
         main_OS = platform.platform()[0].upper()
         if main_OS == 'M': #Mac
-            self.main_connection = serial.Serial('/dev/cu.usbmodem1101', 115200, parity='E', stopbits=1, timeout=1)
+            self.main_connection = serial.Serial('/dev/cu.usbmodem1301', 115200, parity='E', stopbits=1, timeout=1)
         elif main_OS == 'W': #Windows
             self.main_connection = serial.Serial('COM10',115200,parity='E',stopbits=1,timeout=1)
         else:
@@ -17,7 +17,7 @@ class Communicator:
         time.sleep(2)
         self.serialWait()
         check = list(self.main_connection.read(3))
-
+        print(check)
         if ((check[0] == 177) and (check[1] == 176) and (check[2] == 158)):
             print('Connection established successfully')
         else:
@@ -27,7 +27,7 @@ class Communicator:
         self.communication_Tx_buffer = []
         
         # Storage Part
-        self.main_storage_path = 'MainProgram/storage'
+        self.main_storage_path = '/Users/newsogood/Documents/Workspace/2ND_Year/SARC_2021/Programming/HighLevel/New/MainProgram/storage'
         self.clip_storage_path = self.main_storage_path + '/clip'
         self.side_storage_path = self.main_storage_path + '/side'
         self.bottom_storage_path = self.main_storage_path + '/bottom'
@@ -46,6 +46,17 @@ class Communicator:
         self.press_distance = [] # Distance of Gripper press in Durian stick
         self.current_theta = 0 # current angle of Durian Base
         self.weight = 0.0 # Weight of current durian on Durian Base
+        # self.communicateToLoadcell()
+        # print('Please put a durian down on the durian base.')
+        # time.sleep(8)
+        # while(True):
+        #     self.communicateToLoadcell()
+        #     if (self.communication_Rx_buffer[2] > 0 or self.communication_Rx_buffer[3] > 100):
+        #         print('Ready to get data.')
+        #         break
+        #     else:
+        #         print('Durian not found.')
+        # time.sleep(1.5)
 
     def serialWait(self):
         while (self.main_connection.in_waiting == 0):
@@ -70,6 +81,8 @@ class Communicator:
             if ret == True:
                 cv2.imwrite(path, frame)
                 print(name + " recieved.")
+                if count == 4:
+                    cv2.imshow(name, frame)
             camera.release()
         elif camState == "BOTTOM":
             camera1 = cv2.VideoCapture(self.bottom_camera1_number)
@@ -92,9 +105,13 @@ class Communicator:
             if ret1 == True:
                 cv2.imwrite(path1, frame1)
                 print(name1 + " recieved.")
+                if count == 4:
+                    cv2.imshow(name1, frame1)
             if ret2 == True:
                 cv2.imwrite(path2, frame2)
                 print(name2 + " recieved.")
+                if count == 4:
+                    cv2.imshow(name2, frame2)
             camera1.release()
             camera2.release()
 
@@ -112,6 +129,7 @@ class Communicator:
                 cv2.imwrite(self.clip_storage_path + '/' + str(count) + '.jpg', frame)
                 print('frame is recieved.')
         camera.release()
+        cv2.destroyAllWindows()
 
     def communicateToLoadcell(self):
         self.communication_Tx_buffer = [179, 163, 169]
@@ -119,6 +137,27 @@ class Communicator:
         self.serialWait()
         self.communication_Rx_buffer = list(self.main_connection.read(7))
         print(self.communication_Rx_buffer)
+
+    def communicateTOGripperAndSoundModule(self):
+        camera = cv2.VideoCapture(self.top_camera_number)
+        while not camera.isOpened():
+            pass
+        self.communicateToLED("TOP")
+        time.sleep(2)
+        self.communication_Tx_buffer = [181, 159, 0, 0, 255, 255, 173]
+        print('start')
+        self.main_connection.write(self.communication_Tx_buffer)
+        startTime = time.time()*1000
+        while (time.time()*1000 - startTime <= 23000):
+            ret, frame = camera.read()
+            if ret == True:
+                cv2.imshow("frame", frame)
+                print('frame is recieved.')
+            key = cv2.waitKey(50)
+            if key == 27:
+                break
+        cv2.destroyWindow("frame")
+        camera.release()
 
     def communicateToLED(self, ledState):
         if ledState == "TOP":
