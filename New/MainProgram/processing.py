@@ -1,6 +1,6 @@
-from New.MainProgram.model.Mask_RCNN.mrcnn.config import Config
-from New.MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
-from New.MainProgram.model.Mask_RCNN.mrcnn.defect import DefectConfig, InferenceConfig
+from MainProgram.model.Mask_RCNN.mrcnn.config import Config
+from MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
+from MainProgram.model.Mask_RCNN.mrcnn.defect import DefectConfig, InferenceConfig
 
 import tensorflow as tf
 import numpy as np
@@ -11,64 +11,79 @@ class Master:
 
     def __init__(self):
         # Storage Part
-        self.main_storage_path = 'New/MainProgram/storage'
+        self.main_storage_path = 'MainProgram/storage'
         self.clip_storage_path = self.main_storage_path + '/clip'
         self.side_storage_path = self.main_storage_path + '/side'
         self.bottom_storage_path = self.main_storage_path + '/bottom'
         self.stick_storage_path = self.main_storage_path + '/stick'
 
         # Model Part
-        self.main_model_path = 'New/MainProgram/model/'
-        self.sideRemoveModel = tf.keras.models.load_model(self.main_model_path + 'RemoveBackgroundVer10.h5')
+        self.main_model_path = 'MainProgram/model'
+        self.sideRemoveModelName = 'RemoveBackgroundVer10.h5'
+        self.sideRemoveModel = tf.keras.models.load_model(os.path.join(self.main_model_path, self.sideRemoveModelName))
 
         inference_config = InferenceConfig()
-        model_detect_df_folder = self.main_model_path + 'Mask_RCNN/logs/defect20220821T1729'
-        model_detect_df_name = 'mask_rcnn_defect_00010.h5'
+        model_detect_df_folder = self.main_model_path + '/Mask_RCNN/logs/defect20220821T1729'
+        model_detect_df_name = 'mask_rcnn_defect_0010.h5'
         self.model_detect_df = modellib.MaskRCNN(mode="inference", config=inference_config, model_dir=model_detect_df_folder)
         self.model_detect_df.load_weights(os.path.join(model_detect_df_folder, model_detect_df_name), by_name=True)
 
+        # Result Parameter Part
+        self.defect_percent = 0
+
+    def test(self):
+
+        print(self.clip_storage_path)
 
     def imgPreProcess(self, image, size, color):
         if color:
-            res_image = cv2.resize(image, size)
             res_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            res_image = cv2.resize(image, size)
             return res_image
         else:
-            res_image = cv2.resize(image, size)
             res_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            res_image = cv2.resize(image, size)
             return res_image
 
     def find_defect(self):
         #Remove Background
         image_x = 256 #h
         image_y = 144 #w
-        img_name = os.listdir(self.side_storage_path)[0]
-        img = cv2.imread(self + '/' + img_name)
-        img_resize = (self.imgPreProcess(img, (image_x, image_y), True))/255
-        k = self.sideRemoveModel.predict(np.array([img_resize]))
-        k = k.reshape(image_y,image_x)
-        _,k = cv2.threshold(k,0.3,1.0,cv2.THRESH_BINARY)
+        frameList = os.listdir(self.side_storage_path)
+        frameAmount = len(frameList)
+        for frame_name in frameList:
+            frame_loc = self.side_storage_path + '/' + frame_name
+            img = cv2.imread(frame_loc)
+            img_resize = self.imgPreProcess(img, [image_x, image_y], True)
+            img_resize = img_resize/255
+            k = self.sideRemoveModel.predict(np.array([img_resize]))
+            k = k.reshape(image_y,image_x)
+            _,k = cv2.threshold(k,0.3,1.0,cv2.THRESH_BINARY)
 
-        durain_area = cv2.resize(k, (img.shape[1],img.shape[0]))
-        durian_pixel = (durain_area > 0.3).sum()                  #count pixels which are durain
+            durain_area = cv2.resize(k, (img.shape[1],img.shape[0]))
+            durian_pixel = (durain_area > 0.3).sum()                  #count pixels which are durain
 
-        k = cv2.resize(k,(img.shape[1],img.shape[0])).reshape(img.shape[0],img.shape[1],1)
-        img_removed = np.multiply(img / 255.,np.repeat(k,3,axis = 2))
-        img_removed_scale = img_removed * 255
+            k = cv2.resize(k,(img.shape[1],img.shape[0])).reshape(img.shape[0],img.shape[1],1)
+            img_removed = np.multiply(img / 255.,np.repeat(k,3,axis = 2))
+            img_removed_scale = img_removed * 255
 
-        #Detect Background
-        class_name = ['BG', 'defect']
-        results = self.model_detect_df.detect([img_removed_scale], verbose=0)
-        r = results[0]
-        mask = r['masks']                                          #got mask of defect -> shape (1080,1920,x)
-        mask = (np.sum(mask, -1, keepdims=True) >= 1)              #combine all mask
-        defect_pixel = (mask == True).sum()                        #count pixels which are defect
+            #Detect Background
+            class_name = ['BG', 'defect']
+            results = self.model_detect_df.detect([img_removed_scale], verbose=0)
+            r = results[0]
+            mask = r['masks']                                          #got mask of defect -> shape (1080,1920,x)
+            mask = (np.sum(mask, -1, keepdims=True) >= 1)              #combine all mask
+            defect_pixel = (mask == True).sum()                        #count pixels which are defect
 
-        #Percentage
-        self.defect_percent = (defect_pixel/durian_pixel)*100
-
+            #Percentage
+            self.defect_percent += (defect_pixel/durian_pixel)*100
+        self.defect_percent = self.defect_percent/frameAmount
+        print('defect percent : ' + str(self.defect_percent) + '%')
 
     def puCountingFunction(self):
+        #Remove Background
+        image_x = 256 #h
+        image_y = 144 #w
         maxR = 0
         maxL = 0
         radiusDurian = []
@@ -77,7 +92,7 @@ class Master:
         for frame_name in frameList:
             frame_loc = self.clip_storage_path + '/' + frame_name
             side_frame = cv2.imread(frame_loc)
-            preprocessed_frame = self.imgPreProcess(side_frame, (256, 144), True)
+            preprocessed_frame = self.imgPreProcess(side_frame, [image_x, image_y], True)
             input_array = preprocessed_frame/255
             output_array = self.sideRemoveModel.predict(np.array([input_array]))
             output_frame = (output_array.reshape(144,256))*255
@@ -163,3 +178,6 @@ class Master:
                 puTypeList.insert('Incorrect_Pu', 0)
             else:
                 puTypeList.insert('Incomplete_Pu', 0)
+
+Test = Master()
+Test.test()
