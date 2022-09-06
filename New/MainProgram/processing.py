@@ -2,14 +2,55 @@ from MainProgram.model.Mask_RCNN.mrcnn.config import Config
 from MainProgram.model.Mask_RCNN.mrcnn import model as modellib, utils
 from MainProgram.model.Mask_RCNN.mrcnn.defect import DefectConfig, InferenceConfig
 
+from object_detection.utils import label_map_util
+from object_detection.utils import visualization_utils as viz_utils
+from object_detection.builders import model_builder
+from object_detection.utils import config_util
+
 import tensorflow as tf
 import numpy as np
+import random
+import math
+import time
+import six
 import cv2
 import os
 
 class Master:
 
     def __init__(self):
+
+        self.image_x = 640
+        self.image_y = 360
+
+        self.path = {
+        'topcam_folder':os.path.join('storage', 'bottom'),
+        'sidecam_folder':os.path.join('storage', 'side'),
+        'stickcam_folder':os.path.join('storage', 'stick'),
+        'top_checkpoint_path':os.path.join('symmetric', 'Model', 'my_ssd_mobnet4'),
+        'stick_checkpoint_path':os.path.join('symmetric', 'Model', 'my_stick_ssd_mobnet2')
+        }
+        self.file = {
+        'topcam_removeBG_model':os.path.join('symmetric', 'Model', 'RemoveBottomBackground2.h5'),
+        'sidecam_removeBG_model':os.path.join('symmetric', 'Model', 'RemoveBackgroundVer9.h5'),
+        'top_pipeline_config':os.path.join(self.path['top_checkpoint_path'], 'pipeline.config'),
+        'stick_pipeline_config':os.path.join(self.path['stick_checkpoint_path'], 'pipeline.config'),
+        'top_label_map':os.path.join('symmetric', 'annotations', 'label_map.pbtxt'),
+        'stick_label_map':os.path.join('symmetric', 'annotations', 'stick_label_map2.pbtxt')
+        }
+
+        self.top_category_index = label_map_util.create_category_index_from_labelmap(self.file['top_label_map'])
+        self.top_configs = config_util.get_configs_from_pipeline_file(self.file['top_pipeline_config'])
+        self.top_detection_model = model_builder.build(model_config = self.top_configs['model'], is_training=False)
+        self.top_ckpt = tf.compat.v2.train.Checkpoint(model = self.top_detection_model)
+        self.top_ckpt.restore(os.path.join(self.path['top_checkpoint_path'], 'ckpt-201')).expect_partial()
+
+        self.stick_category_index = label_map_util.create_category_index_from_labelmap(self.file['stick_label_map'])
+        self.stick_configs = config_util.get_configs_from_pipeline_file(self.file['stick_pipeline_config'])
+        self.stick_detection_model = model_builder.build(model_config = self.stick_configs['model'], is_training=False)
+        self.stick_ckpt = tf.compat.v2.train.Checkpoint(model = self.stick_detection_model)
+        self.stick_ckpt.restore(os.path.join(self.path['stick_checkpoint_path'], 'ckpt-201')).expect_partial()
+
         # Storage Part
         self.main_storage_path = 'MainProgram/storage'
         self.clip_storage_path = self.main_storage_path + '/clip'
@@ -31,9 +72,106 @@ class Master:
         # Result Parameter Part
         self.defect_percent = 0
 
-    def test(self):
+    @tf.function
+    def bottom_detect_fn(self, image):
+        image, shapes = self.top_detection_model.preprocess(image)
+        prediction_dict = self.top_detection_model.predict(image, shapes)
+        detections = self.top_detection_model.postprocess(prediction_dict, shapes)
+        return detections
 
-        print(self.clip_storage_path)
+    @tf.function
+    def stick_detect_fn(self, image):
+        image, shapes = self.stick_detection_model.preprocess(image)
+        prediction_dict = self.stick_detection_model.predict(image, shapes)
+        detections = self.stick_detection_model.postprocess(prediction_dict, shapes)
+        return detections
+
+    def getCenterFromModel(self, detections, hight, width):
+        ##### input detections['detection_boxes'][max score index]
+        ##### output (x,y) 
+        ymin = np.array(detections[0] * hight)
+        xmin = np.array(detections[1] * width)
+        ymax = np.array(detections[2] * hight)
+        xmax = np.array(detections[3] * width)
+        center_x = ((xmax - xmin)/2) + xmin
+        center_y = ((ymax - ymin)/2) + ymin
+        return center_x, center_y
+
+    def rotatePointZaxis(self, angle, point):
+        ##### Rotation Matrix #####
+        theta = np.radians(angle)
+        [cos, sin] = np.cos(theta), np.sin(theta)
+        [x_new, y_new, z_new,  _] = [((point[0]*cos) - (point[1]*sin)), ((point[2]*sin) + (point[1]*cos)), point[2], 1]
+        point_new = [x_new, y_new, z_new]
+        
+        return point_new
+
+    def rotatePointXaxis(self, angle, point):
+        ##### Rotation Matrix #####|
+        theta = np.radians(angle)
+        [cos, sin] = np.cos(theta), np.sin(theta)
+        [x_new, y_new, z_new,  _] = [point[0], ((point[1]*cos) - (point[2]*sin)), ((point[1]*sin) + (point[2]*cos)), 1]
+        point_new = [x_new, y_new, z_new]
+        
+        return point_new
+
+    def transaltePointXaxis(self, x, point):
+        [x_new, y_new, z_new, _] = [point[0] + x, point[1], point[2], 1]
+        point_new = [x_new, y_new, z_new]
+
+        return point_new
+
+    def translatePointZaxis(self, z, point):
+        [x_new, y_new, z_new, _] = [point[0], point[1], point[2] + z, 1]
+        point_new = [x_new, y_new, z_new]
+
+        return point_new
+
+    def scaleMatrix(self, scale, point):
+        [x_new, y_new, z_new, _] = [point[0]*scale[0], point[1]*scale[1], point[2]*scale[2], 1]
+        point_new = [x_new, y_new, z_new]
+
+        return point_new
+
+    def Bottom_Detection(self, image):
+        ##### return image with Input shape (360x640)#####
+        src = cv2.resize(image, (self.image_x, self.image_y))
+        [hight,width,_] = src.shape
+        image_np = np.array(src).astype(np.uint8)
+        
+        input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+        detections = self.bottom_detect_fn(input_tensor)
+        
+        num_detections = int(detections.pop('num_detections'))
+        detections = {key: value[0, :num_detections].numpy() for key, value in detections.items()}
+        detections['num_detections'] = num_detections
+        
+        detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
+        
+        label_id_offset = 1
+        image_np_with_detections = image_np.copy()
+        
+        viz_utils.visualize_boxes_and_labels_on_image_array(
+                    image_np_with_detections,
+                    detections['detection_boxes'],
+                    detections['detection_classes'] + label_id_offset,
+                    detections['detection_scores'],
+                    self.top_category_index,
+                    use_normalized_coordinates = True,
+                    max_boxes_to_draw = 2,
+                    min_score_thresh = (0.18),
+                    agnostic_mode = False)
+
+        if(detections['detection_scores'][0] >= 0.18):
+            detected = True
+        else:
+            detected = False
+        
+        bottom_detect_point = self.getCenterFromModel(detections['detection_boxes'][0], hight, width)
+        
+        return image_np_with_detections, bottom_detect_point, detected
+
+    
 
     def imgPreProcess(self, image, size, color):
         if color:
@@ -178,6 +316,3 @@ class Master:
                 puTypeList.insert('Incorrect_Pu', 0)
             else:
                 puTypeList.insert('Incomplete_Pu', 0)
-
-Test = Master()
-Test.test()
