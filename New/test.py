@@ -1,4 +1,5 @@
-from MainProgram.processing import Master
+from MainProgram.main import Main
 
-processor = Master()
-processor.find_defect()
+main = Main()
+main.openConnection()
+main.getDurianData()
